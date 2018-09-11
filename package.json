@@ -1,7 +1,7 @@
 {
-  "name": "boilermaker",
+  "name": "pogo2go",
   "version": "1.0.0",
-  "description": "Some boilerplate code to get you started - get shakin'!",
+  "description": "A Pogo Sales App",
   "engines": {
     "node": ">= 7.0.0"
   },
