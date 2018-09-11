@@ -8,7 +8,7 @@ describe('Product model', () => {
     return db.sync({force: true})
   })
 
-  describe.only('Product model', () => {
+  describe('Product model', () => {
     describe('Validations', () => {
       it('requires name', async () => {
         const product = Product.build({
