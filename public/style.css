@@ -1,9 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
+
 body {
-  font-family: sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 a {
   text-decoration: none;
+}
+
+.title {
+  text-align: center;
 }
 
 label {
@@ -18,4 +24,44 @@ nav a {
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+.flex {
+  display: flex;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.gallery {
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.item {
+  max-width: 300px;
+  max-height: 400px;
+  margin: 0 1rem;
+  overflow: hidden;
+}
+
+.item-image {
+  width: 100%;
+  /* height: auto; */
+}
+
+.item .header {
+  background-color: #2cc6f9;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.footer {
+  color: #2cc6f9;
+  text-align: right;
+  padding: 1rem 0;
+  /* background-color: tomato; */
 }
