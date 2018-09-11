@@ -7,7 +7,7 @@ const Product = db.define('product', {
     allowNull: false
   },
   price: {
-    type: Sequelize.DECIMAL(5, 2),
+    type: Sequelize.DECIMAL(7, 2),
     allowNull: false
   },
   description: {
