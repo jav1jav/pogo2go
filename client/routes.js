@@ -6,6 +6,8 @@ import {Login, Signup, UserHome} from './components'
 import {me} from './store'
 import AllProducts from './components/AllProducts'
 import SingleProduct from './components/SingleProduct'
+import Error404 from './components/Error404'
+
 /**
  * COMPONENT
  */
@@ -31,7 +33,7 @@ class Routes extends Component {
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
-        <Route component={Login} />
+        <Route component={Error404} />
       </Switch>
     )
   }
