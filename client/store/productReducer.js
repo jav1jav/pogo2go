@@ -13,14 +13,14 @@ export const fetchProductsFromDB = () => {
   return async dispatch => {
     try {
       const {data: products} = await axios.get('/api/products')
+      console.log('*******', products)
       dispatch(gotProductsFromServer(products))
     } catch (error) {
       console.error(error)
     }
   }
 }
-
-export default function(state = [], action) {
+const productsReducer = (state = [], action) => {
   switch (action.type) {
     case GOT_PRODUCTS: {
       return action.products
@@ -30,3 +30,5 @@ export default function(state = [], action) {
     }
   }
 }
+
+export default productsReducer
