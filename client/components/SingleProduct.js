@@ -30,7 +30,7 @@ class SingleProduct extends Component {
                 <img className='item-image' src={aProduct.image} />
               </div>
               <div>
-              <span className='footer'>${aProduct.price}</span>
+              <h3 className='footer'>${aProduct.price}</h3>
               </div>
               <div className='flex column'>
                 <p>{aProduct.description}</p>
