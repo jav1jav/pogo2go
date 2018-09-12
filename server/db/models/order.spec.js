@@ -3,24 +3,25 @@
 const {expect} = require('chai')
 const db = require('../index')
 const Order = db.model('order')
+const User = db.model('user')
 
 describe('Order model', () => {
-  beforeEach(() => {
-    return db.sync({force: true})
-  })
+  // beforeEach(async () => {
+
+  // })
 
   let cart
 
   beforeEach(async () => {
+    // db.sync({force: true})
+    // await User.create({
+    //   name: 'Cody McCodester',
+    //   email: 'cody@puppybook.com',
+    //   password: 'bones'
+    // })
     cart = await Order.create({
-      products: [1, 2, 3],
       userId: 1
     })
-  })
-
-  it('creates a cart entry in the db with an array of product ids', () => {
-    expect(cart.products[0]).to.be.equal(1)
-    expect(cart.products[1]).to.be.equal(2)
   })
 
   it('creates a cart entry in the db with a default value of false for isPurchased', () => {
