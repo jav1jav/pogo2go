@@ -5,13 +5,10 @@ import PropTypes from 'prop-types'
 import {Login, Signup, UserHome} from './components'
 import {me} from './store'
 import AllProducts from './components/AllProducts'
-<<<<<<< HEAD
 import LandingPage from './components/LandingPage'
-=======
 import SingleProduct from './components/SingleProduct'
 import Error404 from './components/Error404'
 
->>>>>>> b7d54c804776494b6133da69d74249c35fdbf493
 /**
  * COMPONENT
  */
@@ -28,7 +25,7 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={Signup} />
-        <Route exact path='/store/:id' component={SingleProduct} />
+        <Route exact path="/store/:id" component={SingleProduct} />
         <Route exact path="/store" component={AllProducts} />
         <Route exact path="/" component={LandingPage} />
         {isLoggedIn && (
