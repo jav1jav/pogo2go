@@ -9,7 +9,7 @@ import {SingleProduct} from './SingleProduct'
 const adapter = new Adapter()
 enzyme.configure({adapter})
 
-describe.only('SingleProduct', () => {
+describe('SingleProduct', () => {
   let fakePage
 
   beforeEach(() => {
