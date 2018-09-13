@@ -26,17 +26,8 @@ router.get('/:id', async (req, res, next) => {
       include: [Product]
     })
 
-    // console.log(orderDetails);
-    // const productDetails = await Product.findAll({
-    //   where: {id: 1 || 2}
-    // })
-
     res.json({user: userData, orders: orderData})
   } catch (error) {
     next(error)
   }
 })
-
-// [options.include[].through.where]
-
-// name
