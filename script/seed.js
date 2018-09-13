@@ -13,7 +13,9 @@ async function seed() {
 
     User.create({name: 'Murphy', email: 'murphy@email.com', password: '123', imageUrl: 'http://www.fillmurray.com/250/250'}),
 
-    User.create({name: 'Bill Murray', email: 'bill@email.com', password: '123', imageUrl: 'http://www.fillmurray.com/300/300'})
+    User.create({name: 'Bill Murray', email: 'bill@email.com', password: '123', imageUrl: 'http://www.fillmurray.com/300/300'}),
+
+    User.create({name: 'Nick Cage', email: 'bees@email.com', password: '123', imageUrl: 'http://www.placecage.com/300/300'}),
   ]);
 
 
