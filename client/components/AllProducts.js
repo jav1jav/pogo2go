@@ -4,13 +4,12 @@ import {fetchProductsFromDB} from '../store/productReducer'
 import {NavLink} from 'react-router-dom'
 
 class AllProducts extends Component {
-
   componentDidMount() {
     this.props.getProducts()
   }
 
   render() {
-    // console.log('PRODUCTS**', products)
+    console.log('PRODUCTS**', this.props.products)
     return (
       <React.Fragment>
         <h1 className="title">Choose your pogo</h1>
@@ -18,7 +17,7 @@ class AllProducts extends Component {
           {' '}
           {/* container for all products*/}
           {this.props.products.map(item => (
-            <NavLink to={`/products/${item.id}`} key={item.name}>
+            <NavLink to={`/store/${item.id}`} key={item.name}>
               <div className="item flex column">
                 <div className="flex column">
                   <div className="header">
