@@ -9,64 +9,84 @@ async function seed() {
   console.log('db synced!')
 
   const users = await Promise.all([
-    User.create({name: 'Cody', email: 'cody@email.com', password: '123', imageUrl: 'http://www.fillmurray.com/275/275'}),
+    User.create({
+      name: 'Cody',
+      email: 'cody@email.com',
+      password: '123',
+      imageUrl: 'http://www.fillmurray.com/275/275'
+    }),
 
-    User.create({name: 'Murphy', email: 'murphy@email.com', password: '123', imageUrl: 'http://www.fillmurray.com/250/250'}),
+    User.create({
+      name: 'Murphy',
+      email: 'murphy@email.com',
+      password: '123',
+      imageUrl: 'http://www.fillmurray.com/250/250'
+    }),
 
-    User.create({name: 'Bill Murray', email: 'bill@email.com', password: '123', imageUrl: 'http://www.fillmurray.com/300/300'}),
+    User.create({
+      name: 'Bill Murray',
+      email: 'bill@email.com',
+      password: '123',
+      imageUrl: 'http://www.fillmurray.com/300/300'
+    }),
 
-    User.create({name: 'Nick Cage', email: 'bees@email.com', password: '123', imageUrl: 'http://www.placecage.com/300/300'}),
-  ]);
+    User.create({
+      name: 'Nick Cage',
+      email: 'bees@email.com',
+      password: '123',
+      imageUrl: 'http://www.placecage.com/300/300'
+    })
+  ])
 
-
-  const products = await Promise.all([
-    Product.create({
+  const products = async () => {
+    const product1 = await Product.create({
       name: 'The Commuter',
       price: 199.99,
       description:
         'Taiyaki portland enamel pin trust fund, cardigan cred whatever vice chicharrones roof party kale chips pabst venmo. Wayfarers air plant wolf everyday carry shaman whatever raclette distillery umami blog ennui thundercats direct trade. Gochujang selfies heirloom thundercats everyday carry occupy, cray freegan organic sartorial yuccie. Flannel polaroid vape, XOXO photo booth pork belly migas woke enamel pin portland cold-pressed truffaut farm-to-table pug.',
-        image:
+      image:
         'https://d39qw52yhr4bcj.cloudfront.net/catalog/product/cache/9/image/9df78eab33525d08d6e5fb8d27136e95/7/7/770x_acomp.jpg'
-    }),
-    Product.create({
+    })
+    const product2 = await Product.create({
       name: 'The Fixed Stick',
       price: 149.99,
       description:
         'Jianbing jean shorts direct trade, poke butcher ethical cliche helvetica dreamcatcher. Succulents shabby chic schlitz truffaut raw denim, cardigan swag jianbing fashion axe poutine lomo ethical mlkshk chia plaid. Portland blog godard af, blue bottle tbh actually literally pop-up edison bulb poke biodiesel.',
-        image:
+      image:
         'https://d39qw52yhr4bcj.cloudfront.net/catalog/product/cache/9/image/9df78eab33525d08d6e5fb8d27136e95/7/7/770x_acomp.jpg'
-    }),
-    Product.create({
+    })
+    const product3 = await Product.create({
       name: 'The Urban Stick',
       price: 299.99,
       description:
         'Vexillologist occupy bicycle rights cray humblebrag DIY, plaid poutine dreamcatcher typewriter jianbing. Palo santo meditation blog tilde bicycle rights kale chips whatever bushwick cold-pressed authentic echo park enamel pin tattooed hot chicken synth. Migas unicorn cold-pressed, raclette tumeric tousled roof party heirloom church-key fanny pack paleo deep v. Cliche pinterest tote bag, flannel kinfolk succulents heirloom blog dreamcatcher cray man bun.',
-        image:
+      image:
         'https://d39qw52yhr4bcj.cloudfront.net/catalog/product/cache/9/image/9df78eab33525d08d6e5fb8d27136e95/7/7/770x_acomp.jpg'
-    }),
-    Product.create({
+    })
+    const product4 = await Product.create({
       name: 'The Offroader',
       price: 399.99,
       description:
         'Hella polaroid vegan tumblr. Distillery banjo health goth tacos chambray waistcoat vexillologist trust fund kombucha cold-pressed. Ethical messenger bag tbh yr intelligentsia lyft activated charcoal truffaut jean shorts poke plaid mumblecore neutra coloring book.',
-        image:
+      image:
         'https://d39qw52yhr4bcj.cloudfront.net/catalog/product/cache/9/image/9df78eab33525d08d6e5fb8d27136e95/7/7/770x_acomp.jpg'
-    }),
-    Product.create({
+    })
+    const product5 = await Product.create({
       name: 'The Deluxe Stick',
       price: 9999.0,
       description:
         'Sartorial locavore subway tile celiac tumblr health goth tousled 8-bit cliche asymmetrical narwhal kitsch squid. Deep v selfies neutra offal, truffaut pitchfork pour-over craft beer banjo meditation vegan umami actually vexillologist twee. Farm-to-table enamel pin microdosing, adaptogen hashtag kitsch heirloom franzen gochujang chicharrones tumblr brunch poutine offal chartreuse.',
-        image:
+      image:
         'https://d39qw52yhr4bcj.cloudfront.net/catalog/product/cache/9/image/9df78eab33525d08d6e5fb8d27136e95/7/7/770x_acomp.jpg'
     })
-  ])
+  }
+
+  await products()
 
   const orders = await Promise.all([
     Order.create({userId: 1}),
     Order.create({userId: 2})
   ])
-
 
   const orderLists = await Promise.all([
     OrderList.create({orderId: 1, productId: 1}),
@@ -75,8 +95,6 @@ async function seed() {
     OrderList.create({orderId: 2, productId: 2}),
     OrderList.create({orderId: 2, productId: 3})
   ])
-
-
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded ${products.length} products`)
