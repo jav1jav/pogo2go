@@ -1,37 +1,47 @@
-import React from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import {fetchUserData} from '../store/userReducer'
 
-/**
- * COMPONENT
- */
-export const UserHome = props => {
-  const {email} = props
+export class UserHome extends Component {
+  componentDidMount() {
+    this.props.getUserData(1)
+  }
 
-  return (
-    <div>
-      <h3>Welcome, NAME_HERE!</h3>
+  render() {
+    return (
       <div>
-        <img src='http://www.placecage.com/400/400' />
-        <h3>NAME_GOES_HERE</h3>
-        <p>EMAIL_GOES_HERE</p>
-      </div>
-      <div>
-        <h2>Order History</h2>
-        <div>
-          <div className='single-order'>
-            <h4>DATE_HERE</h4>
-            <ul>
-              <li>PRODUCT 1 NAME</li>
-              <li>PRODUCT 2 NAME</li>
-              <li>PRODUCT 3 NAME</li>
-            </ul>
-            <hr />
+        {!this.props.user.user ? (
+          <p>loading...</p>
+        ) : (
+          <div>
+            <h3>Welcome, {this.props.user.user.name}</h3>
+            <div>
+              <img src={this.props.user.user.imageUrl} />
+              <h3>{this.props.user.user.name}</h3>
+              <p>{this.props.user.user.email}</p>
+            </div>
+            <div>
+              <h2>Order History</h2>
+              <div>
+                {this.props.user.orders.map(order => (
+                  <div className="single-order" key={order.id}>
+                    <h4>{order.createdAt}</h4>
+                    <ul>
+                      {order.products.map(product => (
+                        <li key={product.id}>{product.name}</li>
+                      ))}
+                    </ul>
+                    <hr />
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
+        )}
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 /**
@@ -39,15 +49,14 @@ export const UserHome = props => {
  */
 const mapState = state => {
   return {
-    email: state.user.email
+    user: state.user
   }
 }
 
-export default connect(mapState)(UserHome)
+const mapDispatch = dispatch => ({
+  getUserData: id => {
+    dispatch(fetchUserData(id))
+  }
+})
 
-/**
- * PROP TYPES
- */
-UserHome.propTypes = {
-  email: PropTypes.string
-}
+export default connect(mapState, mapDispatch)(UserHome)
