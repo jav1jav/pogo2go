@@ -9,6 +9,7 @@ class AllProducts extends Component {
   }
 
   render() {
+    // OB/JD: put all your logs through the wood chipper, DONT INCLUDE IN MASTER
     console.log('PRODUCTS**', this.props.products)
     return (
       <React.Fragment>

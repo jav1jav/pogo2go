@@ -16,6 +16,7 @@ describe('SingleProduct', () => {
     fakePage = shallow(<SingleProduct />)
   })
 
+  // OB/JD: dead code, shouldn't be in master
   xit('renders the price in an span', () => {
     expect(fakePage.find('h3').text()).to.be.equal('$199.99')
   })

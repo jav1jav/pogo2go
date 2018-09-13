@@ -17,6 +17,11 @@ describe('Product model', () => {
           image:
             'https://d39qw52yhr4bcj.cloudfront.net/catalog/product/cache/9/image/9df78eab33525d08d6e5fb8d27136e95/7/7/770x_acomp.jpg'
         })
+        /*
+        OB/JD: recommend looking into chai-as-promised
+        await error = expect(product.validate()).to.be.rejected;
+        expect(err.message).to.contain('name cannot be null');
+        */
         try {
           await product.validate()
           throw Error(

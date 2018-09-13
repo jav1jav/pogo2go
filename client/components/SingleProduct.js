@@ -4,6 +4,7 @@ import {fetchAProductFromDB, fetchProductsFromDB} from '../store/productReducer'
 import {NavLink} from 'react-router-dom'
 
 class SingleProduct extends Component {
+  // OB/JD: unnecessary code
   constructor(props) {
     super(props)
   }
@@ -30,6 +31,12 @@ class SingleProduct extends Component {
           price: '',
           description: ''
         }
+    /*
+    OB/JD: might be better to show a Loading view of some kind instead of a "blank" view
+    if (loading) {
+      return <Loading />; // or whatever
+    }
+    */
     return (
       <React.Fragment>
         <h1 className="title">{aProduct.name}</h1>

@@ -19,8 +19,10 @@ const Order = require('./order')
 
 Order.belongsTo(User)
 User.hasMany(Order)
+// OB/JD: consider name change for OrderList, which could be understood as "each row in this table is itself a list representing an order", but really it is "each row in this table represents an entry in a full order list"
 Product.belongsToMany(Order, {through: 'OrderList'})
 
+// OB/JD: bury undead code, commented out code should never be in master, instead put that commented code into an issue somewhere
 //Order.hasMany(Product)
 
 module.exports = {

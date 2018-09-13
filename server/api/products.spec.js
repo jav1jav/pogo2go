@@ -11,6 +11,7 @@ describe('Product routes', () => {
 
   describe('/api/products/', () => {
     beforeEach(async () => {
+      // OB/JD: consider removing some of these example data (as little as possible)
       await Promise.all([
         Product.create({
           name: 'The Commuter',
@@ -59,12 +60,13 @@ describe('Product routes', () => {
         .expect(200)
 
       expect(res.body).to.be.an('array')
+      // OB/JD: order *might* not always be reliable, if so you could use chai-things plugin, e.g. `expect(res.body).to.contain.a.thing.with.property('name', 'The Commuter');`
       expect(res.body[0].name).to.be.equal('The Commuter')
     })
 
     it('GET /api/products/2', async () => {
       const res = await request(app)
-        .get('/api/products/2')
+        .get('/api/products/2') // OB/JD: beware the id might not correspond properly due to a race condition in your `beforeEach`
         .expect(200)
 
       expect(res.body).to.be.an('object')
