@@ -79,13 +79,19 @@ async function seed() {
       image:
         'https://d39qw52yhr4bcj.cloudfront.net/catalog/product/cache/9/image/9df78eab33525d08d6e5fb8d27136e95/7/7/770x_acomp.jpg'
     })
+    return [product1, product2, product3, product4, product5]
   }
 
-  await products()
+  const productsSeed = await products()
 
   const orders = await Promise.all([
-    Order.create({userId: 1}),
-    Order.create({userId: 2})
+    Order.create({userId: 1, isPurchased: true}),
+    Order.create({userId: 1, isPurchased: true}),
+    Order.create({userId: 1, isPurchased: false}),
+    Order.create({userId: 2, isPurchased: true}),
+    Order.create({userId: 3, isPurchased: true}),
+    Order.create({userId: 3, isPurchased: true}),
+    Order.create({userId: 3, isPurchased: false})
   ])
 
   const orderLists = await Promise.all([
@@ -93,11 +99,18 @@ async function seed() {
     OrderList.create({orderId: 1, productId: 4}),
     OrderList.create({orderId: 2, productId: 1}),
     OrderList.create({orderId: 2, productId: 2}),
-    OrderList.create({orderId: 2, productId: 3})
+    OrderList.create({orderId: 2, productId: 3}),
+    OrderList.create({orderId: 4, productId: 3}),
+    OrderList.create({orderId: 4, productId: 1}),
+    OrderList.create({orderId: 4, productId: 5}),
+    OrderList.create({orderId: 5, productId: 3}),
+    OrderList.create({orderId: 5, productId: 1}),
+    OrderList.create({orderId: 5, productId: 2}),
+    OrderList.create({orderId: 5, productId: 4})
   ])
 
   console.log(`seeded ${users.length} users`)
-  console.log(`seeded ${products.length} products`)
+  console.log(`seeded ${productsSeed.length} products`)
   console.log(`seeded ${orders.length} orders`)
   console.log(`seeded ${orderLists.length} orderLists`)
   console.log(`seeded successfully`)
