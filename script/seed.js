@@ -100,13 +100,18 @@ async function seed() {
     OrderList.create({orderId: 2, productId: 1}),
     OrderList.create({orderId: 2, productId: 2}),
     OrderList.create({orderId: 2, productId: 3}),
+    OrderList.create({orderId: 3, productId: 3}),
+    OrderList.create({orderId: 3, productId: 1}),
     OrderList.create({orderId: 4, productId: 3}),
     OrderList.create({orderId: 4, productId: 1}),
     OrderList.create({orderId: 4, productId: 5}),
     OrderList.create({orderId: 5, productId: 3}),
     OrderList.create({orderId: 5, productId: 1}),
     OrderList.create({orderId: 5, productId: 2}),
-    OrderList.create({orderId: 5, productId: 4})
+    OrderList.create({orderId: 5, productId: 4}),
+    OrderList.create({orderId: 6, productId: 1}),
+    OrderList.create({orderId: 6, productId: 2}),
+    OrderList.create({orderId: 7, productId: 4})
   ])
 
   console.log(`seeded ${users.length} users`)
