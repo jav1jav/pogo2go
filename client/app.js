@@ -8,7 +8,7 @@ import Routes from './routes'
 const App = () => {
   return (
     <Provider store={store}>
-      <StripeProvider apiKey="pk_test_12345">
+      <StripeProvider apiKey="pk_test_Eryop2hm2EDMCXBVoPDaeKLI">
         <div>
           <Navbar />
           <Routes />
