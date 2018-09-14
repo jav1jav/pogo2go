@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchAnOrderFromDB} from '../store/orderReducer'
-import {fetchProductsFromDB} from '../store/productReducer'
+import {fetchUserData} from '../store/userReducer'
 import {NavLink} from 'react-router-dom'
 
 class ShoppingCart extends Component {
@@ -10,20 +9,20 @@ class ShoppingCart extends Component {
   }
 
   async componentDidMount() {
-    const orderId = Number(this.props.match.params.id)
-    await this.props.getAnOrder(orderId)
-    await this.props.getAllProducts()
+    const userId = 1 //TODO: find the user data off the session
+    await this.props.fetchUserData(userId)
   }
 
   render() {
-    const anOrder = this.props.order.anOrder
-    const total = this.props.order.total
-    const allProducts = this.props.products
-
-    console.log('anOrder', anOrder)
-    if (!allProducts.length || !anOrder) {
+    const aUser = this.props.user
+    const userOrders = aUser.orders
+    if (!userOrders) {
       return <div>Loading!</div>
     } else {
+      const anOrder = userOrders.find(order => !order.isPurchased)
+      const orderTotal = anOrder.products
+        .map(product => Number(product.price))
+        .reduce((curr, acc) => curr + acc, 0)
       return (
         <React.Fragment>
           <div>
@@ -45,7 +44,7 @@ class ShoppingCart extends Component {
                   <td>
                     <b>total</b>
                   </td>
-                  <td>{total}</td>
+                  <td>{orderTotal}</td>
                 </tr>
               </tbody>
             </table>
@@ -58,13 +57,12 @@ class ShoppingCart extends Component {
 
 const mapStateToProps = state => ({
   products: state.products,
-  order: state.order
-  //user: state.user
+  order: state.order,
+  user: state.user
 })
 
 const mapDispatchToProps = dispatch => ({
-  getAnOrder: orderId => dispatch(fetchAnOrderFromDB(orderId)),
-  getAllProducts: () => dispatch(fetchProductsFromDB())
+  fetchUserData: userId => dispatch(fetchUserData(userId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCart)
