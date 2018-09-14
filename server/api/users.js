@@ -1,8 +1,5 @@
 const router = require('express').Router()
-<<<<<<< HEAD
-=======
 const db = require('../db')
->>>>>>> master
 const {User, Order, Product} = require('../db/models')
 module.exports = router
 
@@ -28,10 +25,6 @@ router.get('/:id', async (req, res, next) => {
       where: {userId: id},
       include: [Product]
     })
-<<<<<<< HEAD
-=======
-
->>>>>>> master
     res.json({user: userData, orders: orderData})
   } catch (error) {
     next(error)
