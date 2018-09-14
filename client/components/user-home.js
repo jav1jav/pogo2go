@@ -26,7 +26,7 @@ export class UserHome extends Component {
               <div>
                 {this.props.user.orders.map(order => (
                   <div className="single-order" key={order.id}>
-                    <h4>{order.createdAt}</h4>
+                    <h4>{order.createdAt.split('T')[0]}</h4>
                     <ul>
                       {order.products.map(product => (
                         <li key={product.id}>{product.name}</li>
