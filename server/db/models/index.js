@@ -21,8 +21,11 @@ Order.belongsTo(User)
 User.hasMany(Order)
 Product.belongsToMany(Order, {through: 'OrderList'})
 Order.belongsToMany(Product, {through: 'OrderList'})
+<<<<<<< HEAD
 
 //Order.hasMany(Product)
+=======
+>>>>>>> master
 
 module.exports = {
   User,
