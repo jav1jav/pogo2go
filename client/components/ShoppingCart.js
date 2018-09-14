@@ -4,48 +4,50 @@ import {fetchAnOrderFromDB} from '../store/orderReducer'
 import {fetchProductsFromDB} from '../store/productReducer'
 import {NavLink} from 'react-router-dom'
 
-//const dummyData = [{orderId: 1, productId: 2}, {orderId: 1, productId: 3},  {orderId: 1, productId: 4},  {orderId: 1, productId: 5}]
-
 class ShoppingCart extends Component {
   constructor(props) {
     super(props)
   }
 
   async componentDidMount() {
-
     const orderId = Number(this.props.match.params.id)
     await this.props.getAnOrder(orderId)
     await this.props.getAllProducts()
   }
 
   render() {
-    const anOrder = this.props.order
+    const anOrder = this.props.order.anOrder
+    const total = this.props.order.total
     const allProducts = this.props.products
 
-console.log('anOrder', anOrder)
-    if (!allProducts.length || !anOrder.length ) {
+    console.log('anOrder', anOrder)
+    if (!allProducts.length || !anOrder) {
       return <div>Loading!</div>
     } else {
       return (
         <React.Fragment>
           <div>
             <table>
-              <tr>
-                <th>product name</th>
-                <th>price</th>
-              </tr>
-
-              {anOrder.orderItems.map(item => {
-                const prod = allProducts.find(
-                  product => item.productId === product.id
-                )
-                return (
-                  <tr key={prod.id}>
-                    <td>{prod.name}</td>
-                    <td>{prod.price}</td>
-                  </tr>
-                )
-              })}
+              <tbody>
+                <tr>
+                  <th>product name</th>
+                  <th>price</th>
+                </tr>
+                {anOrder.products.map(prod => {
+                  return (
+                    <tr key={prod.id}>
+                      <td>{prod.name}</td>
+                      <td>{prod.price}</td>
+                    </tr>
+                  )
+                })}
+                <tr>
+                  <td>
+                    <b>total</b>
+                  </td>
+                  <td>{total}</td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </React.Fragment>

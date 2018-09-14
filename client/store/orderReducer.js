@@ -24,7 +24,7 @@ export const fetchAnOrderFromDB = orderId => {
 }
 
 //reducer
-const ordersReducer = (state = [], action) => {
+const ordersReducer = (state = {}, action) => {
   switch (action.type) {
     case GOT_AN_ORDER: {
       return action.order
