@@ -25,7 +25,6 @@ router.get('/:id', async (req, res, next) => {
       where: {userId: id},
       include: [Product]
     })
-
     res.json({user: userData, orders: orderData})
   } catch (error) {
     next(error)
