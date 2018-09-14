@@ -8,6 +8,7 @@ import AllProducts from './components/AllProducts'
 import LandingPage from './components/LandingPage'
 import SingleProduct from './components/SingleProduct'
 import Error404 from './components/Error404'
+import ShoppingCart from './components/ShoppingCart'
 // import UserHome from './components/user-home'
 
 /**
@@ -28,6 +29,7 @@ class Routes extends Component {
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/store/:id" component={SingleProduct} />
         <Route exact path="/store" component={AllProducts} />
+        <Route exact path="/order/:id" component={ShoppingCart} />
         {/* TODO: Temporary route below. Should only show up when logged in.*/}
         <Route path="/home" component={UserHome} />
         <Route exact path="/" component={LandingPage} />
