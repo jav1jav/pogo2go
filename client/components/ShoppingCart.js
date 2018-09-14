@@ -11,18 +11,19 @@ class ShoppingCart extends Component {
     super(props)
   }
 
-  componentDidMount() {
-    this.props.getAllProducts()
+  async componentDidMount() {
+
     const orderId = Number(this.props.match.params.id)
-    this.props.getAnOrder(orderId)
+    await this.props.getAnOrder(orderId)
+    await this.props.getAllProducts()
   }
 
   render() {
-
-    const allProducts = this.props.products
     const anOrder = this.props.order
+    const allProducts = this.props.products
 
-    if (!allProducts.length) {
+console.log('anOrder', anOrder)
+    if (!allProducts.length || !anOrder.length ) {
       return <div>Loading!</div>
     } else {
       return (
@@ -34,7 +35,7 @@ class ShoppingCart extends Component {
                 <th>price</th>
               </tr>
 
-              {anOrder.map(item => {
+              {anOrder.orderItems.map(item => {
                 const prod = allProducts.find(
                   product => item.productId === product.id
                 )
