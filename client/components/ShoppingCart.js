@@ -56,8 +56,6 @@ class ShoppingCart extends Component {
 }
 
 const mapStateToProps = state => ({
-  products: state.products,
-  order: state.order,
   user: state.user
 })
 
