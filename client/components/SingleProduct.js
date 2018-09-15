@@ -34,7 +34,6 @@ class SingleProduct extends Component {
         //dispatch thunk to create order
       } else {
         //write locally
-        console.log('aprod', aProduct)
         const productList = JSON.parse(window.localStorage.getItem('productList')) || []
         productList.push(aProduct)
         window.localStorage.setItem('productList', JSON.stringify(productList))
