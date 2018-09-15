@@ -52,11 +52,11 @@ class ShoppingCart extends Component {
       }
     }
 
-// if you're logged in but you don't have a user, you have to show loading till we get the user from the update of state in componentDidMount
+// if you're logged in but you don't have a user, you have to show loading till we get the user from the update of redux state in componentDidMount
 // or
 // if you're not loggged in and there's no productList on local storage we have to render a blank cart
 //    if (isLoggedIn && aUser)  {
-    if (false) {
+    if (false) { //currently forcing the else condition while testing use of localStorage
       return <div>Loading!</div>
     } else {
       return (
