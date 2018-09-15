@@ -15,14 +15,14 @@ class ShoppingCart extends Component {
 
   render() {
     const isLoggedIn = false //TODO: set the login status
-    let productList
+    let productList = [];
 
     // assuming that if you're logged in we're pulling from state (I think there are corner cases that will be screwed) then
      if (isLoggedIn) {
       const aUser = this.props.user
       productList = aUser.orders.find(order => !order.isPurchased).products
      } else {
-      productList = JSON.parse(window.localStorage.getItem('productList'))
+      productList = JSON.parse(window.localStorage.getItem('productList')) || []
      }
 
     const orderTotal = productList

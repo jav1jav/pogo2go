@@ -35,7 +35,7 @@ class SingleProduct extends Component {
       } else {
         //write locally
         console.log('aprod', aProduct)
-        const productList = JSON.parse(window.localStorage.getItem('productList'))
+        const productList = JSON.parse(window.localStorage.getItem('productList')) || []
         productList.push(aProduct)
         window.localStorage.setItem('productList', JSON.stringify(productList))
       }
