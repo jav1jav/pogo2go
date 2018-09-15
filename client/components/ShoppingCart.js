@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchUserData} from '../store/userReducer'
-import {NavLink} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 class ShoppingCart extends Component {
   constructor(props) {
@@ -14,15 +14,28 @@ class ShoppingCart extends Component {
   }
 
   render() {
-    const aUser = this.props.user
-    const userOrders = aUser.orders
-    if (!userOrders) {
+    const isLoggedIn = false //TODO: set the login status
+    let productList
+
+    // assuming that if you're logged in we're pulling from state (I think there are corner cases that will be screwed) then
+     if (isLoggedIn) {
+      const aUser = this.props.user
+      productList = aUser.orders.find(order => !order.isPurchased).products
+     } else {
+      productList = JSON.parse(window.localStorage.getItem('productList'))
+     }
+
+    const orderTotal = productList
+    .map(product => Number(product.price))
+    .reduce((curr, acc) => curr + acc, 0)
+
+// if you're logged in but you don't have a user, you have to show loading till we get the user from the update of state in componentDidMount
+// or
+// if you're not loggged in and there's no productList on local storage we have to render a blank cart
+//    if (isLoggedIn && aUser)  {
+    if (false) {
       return <div>Loading!</div>
     } else {
-      const anOrder = userOrders.find(order => !order.isPurchased)
-      const orderTotal = anOrder.products
-        .map(product => Number(product.price))
-        .reduce((curr, acc) => curr + acc, 0)
       return (
         <React.Fragment>
           <div>
@@ -32,7 +45,7 @@ class ShoppingCart extends Component {
                   <th>product name</th>
                   <th>price</th>
                 </tr>
-                {anOrder.products.map(prod => {
+                {productList.map(prod => {
                   return (
                     <tr key={prod.id}>
                       <td>{prod.name}</td>
@@ -49,6 +62,7 @@ class ShoppingCart extends Component {
               </tbody>
             </table>
           </div>
+          <div><Link to="/store">Continue Shopping</Link></div>
         </React.Fragment>
       )
     }
