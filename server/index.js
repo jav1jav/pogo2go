@@ -73,12 +73,12 @@ const createApp = () => {
   app.post("/charge", async (req, res) => {
     try {
       let {status} = await stripe.charges.create({
-        amount: 2000,
+        amount: req.body.amount,
         currency: "usd",
-        description: "An example charge",
-        source: req.body
+        description: req.body.description,
+        source: req.body.source
       });
-
+      console.log('STATUS ====> ', status)
       res.json({status});
     } catch (err) {
       res.status(500).end();
