@@ -12,8 +12,6 @@ class ShoppingCart extends Component {
   }
 
   async componentDidMount() {
-    console.log('CDM')
-    console.log('this.props', this.props)
     let {user, isLoggedIn} = this.props
 
     if (isLoggedIn) {
