@@ -36,8 +36,6 @@ class ShoppingCart extends Component {
   }
 
   render() {
-    console.log('render')
-    console.log('this.props', this.props)
     let {user, isLoggedIn} = this.props
     let productList = this.state.productList
 
