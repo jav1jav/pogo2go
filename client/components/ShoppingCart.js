@@ -26,11 +26,10 @@ class ShoppingCart extends Component {
       // const user = this.props.user
       if (!this.state.productList) {
         // go see if there's a shopping cart on the user, and if so populate local state
-        this.setState(
-          user.orders.length
-            ? user.orders.find(order => !order.isPurchased).products
+        this.setState({
+          productList: user.orders.length ? user.orders.find(order => !order.isPurchased).products
             : []
-        )
+        })
       }
     }
   }
