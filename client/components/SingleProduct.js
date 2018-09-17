@@ -4,10 +4,6 @@ import {fetchAProductFromDB, fetchProductsFromDB} from '../store/productReducer'
 import {NavLink} from 'react-router-dom'
 
 class SingleProduct extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
     // if (this.props.products.length) {
     this.props.getAllProducts()
@@ -18,6 +14,7 @@ class SingleProduct extends Component {
   }
 
   render() {
+    const isLoggedIn = false;
     const productId = Number(this.props.match.params.id)
     const allProducts = this.props.products
     //Since the componentDidMount hasn't run on the initial render, we are
@@ -30,6 +27,19 @@ class SingleProduct extends Component {
           price: '',
           description: ''
         }
+
+    const writeToCart = () => {
+      //event.preventDefault
+      if (isLoggedIn) {
+        //dispatch thunk to create order
+      } else {
+        //write locally
+        const productList = JSON.parse(window.localStorage.getItem('productList')) || []
+        productList.push(aProduct)
+        window.localStorage.setItem('productList', JSON.stringify(productList))
+      }
+    }
+
     return (
       <React.Fragment>
         <h1 className="title">{aProduct.name}</h1>
@@ -47,6 +57,7 @@ class SingleProduct extends Component {
             <div className="flex column">
               <p>{aProduct.description}</p>
             </div>
+            <div><button type="submit" onClick={writeToCart}>Buy Me!</button></div>
           </div>
         </div>
       </React.Fragment>
