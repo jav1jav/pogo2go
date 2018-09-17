@@ -16,6 +16,10 @@ label {
   display: block;
 }
 
+.bold {
+  font-weight: bold;
+}
+
 nav a {
   display: inline-block;
   margin: 1em;
@@ -43,6 +47,9 @@ form div {
   max-width: 300px;
   max-height: 400px;
   margin: 0 1rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  margin: 1rem 0;
   overflow: hidden;
 }
 
@@ -63,5 +70,36 @@ form div {
   color: #2cc6f9;
   text-align: right;
   padding: 1rem 0;
+  margin-right: 1rem;
   /* background-color: tomato; */
+}
+
+table {
+    border-collapse: collapse;
+    min-width: 300px;
+    width: 100%;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(odd){background-color: #f2f2f2}
+
+th {
+    background-color: #2cc6f9;
+    color: white;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkout {
+  align-items: center;
+  min-width: 500px;
+  max-width: 600px;
 }

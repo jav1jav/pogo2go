@@ -28,34 +28,41 @@ class CheckoutForm extends Component {
 
     return (
       !this.state.complete ? (
-        <div className="checkout">
-          <h1>Checkout</h1>
-          <table>
-            <tr>
-              <th>Product Name</th>
-              <th>Price</th>
-            </tr>
-            <tr>
-              <td>The Commuter</td>
-              <td>$199.99</td>
-            </tr>
-            <tr>
-              <td>The Fixed Stick</td>
-              <td>$149.99</td>
-            </tr>
-          </table>
-          <p>TOTAL: TOTAL_HERE</p>
-          <p>Enter info to complete purchase:</p>
+        <div className='container flex'>
+          <div className="checkout">
+            <h1>Checkout</h1>
+            <table className='item'>
+              <thead>
+                <tr>
+                  <th>Product Name</th>
+                  <th>Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>The Commuter</td>
+                  <td>$199.99</td>
+                </tr>
+                <tr>
+                  <td>The Fixed Stick</td>
+                  <td>$149.99</td>
+                </tr>
+              </tbody>
+            </table>
+            <p><span className='bold total'>TOTAL: </span>TOTAL_HERE</p>
+            <p>Enter info to complete purchase:</p>
 
-          {/* ONLY RENDER THIS FORM IF NO USER LOGGED IN*/}
-          <form style={{display: 'flex', flexDirection: 'column'}} onSubmit={this.submit}>
-            <label>Email</label>
-            <input type='text' name='email' />
+            {/* ONLY RENDER THIS FORM IF NO USER LOGGED IN*/}
+            <form className='checkout-form' style={{display: 'flex', flexDirection: 'column'}} onSubmit={this.submit}>
+              <label>Email</label>
+              <input type='text' name='email' />
 
-          <CardElement />
-          <button type='submit'>Purchase</button>
-          </form>
+            <CardElement/>
+            <button type='submit'>Purchase</button>
+            </form>
+          </div>
         </div>
+
       ) : (
         <React.Fragment>
           <h1>Purchase Complete</h1>
