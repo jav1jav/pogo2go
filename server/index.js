@@ -12,6 +12,8 @@ const app = express()
 const socketio = require('socket.io')
 module.exports = app
 
+const stripe = require("stripe")("sk_test_lkIre3CrUTNq4sv0XEqlKu3o");
+
 // This is a global Mocha hook, used for resource cleanup.
 // Otherwise, Mocha v4+ never quits after tests.
 if (process.env.NODE_ENV === 'test') {
@@ -41,6 +43,7 @@ passport.deserializeUser(async (id, done) => {
 })
 
 const createApp = () => {
+  app.use(require("body-parser").text());
   // logging middleware
   app.use(morgan('dev'))
 
@@ -66,6 +69,22 @@ const createApp = () => {
   // auth and api routes
   app.use('/auth', require('./auth'))
   app.use('/api', require('./api'))
+
+  // Stripe API
+  app.post("/charge", async (req, res) => {
+    try {
+      let {status} = await stripe.charges.create({
+        amount: req.body.amount,
+        currency: "usd",
+        description: req.body.description,
+        source: req.body.source
+      });
+      res.json({status});
+    } catch (err) {
+      res.status(500).end();
+    }
+  });
+
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')))
