@@ -7,7 +7,6 @@ class StripeTest extends Component {
   render() {
     return(
       <React.Fragment>
-        <h1>Stripe Test</h1>
         <Elements>
           <InjectedCheckoutForm />
         </Elements>

@@ -25,24 +25,44 @@ class CheckoutForm extends Component {
 }
 
   render() {
-    if (this.state.complete) return (
-      <React.Fragment>
-        <h1>Purchase Complete</h1>
-        <p>Come by and pick up your pogo. You know where to find us!</p>
-      </React.Fragment>
-    );
 
     return (
-      <div className="checkout">
-        <p>Would you like to complete the purchase?</p>
-        <form style={{display: 'flex', flexDirection: 'column'}} onSubmit={this.submit}>
-          <label>Email</label>
-          <input type='text' name='email' />
+      !this.state.complete ? (
+        <div className="checkout">
+          <h1>Checkout</h1>
+          <table>
+            <tr>
+              <th>Product Name</th>
+              <th>Price</th>
+            </tr>
+            <tr>
+              <td>The Commuter</td>
+              <td>$199.99</td>
+            </tr>
+            <tr>
+              <td>The Fixed Stick</td>
+              <td>$149.99</td>
+            </tr>
+          </table>
+          <p>TOTAL: TOTAL_HERE</p>
+          <p>Enter info to complete purchase:</p>
 
-        <CardElement />
-        <button type='submit'>Purchase</button>
-        </form>
-      </div>
+          {/* ONLY RENDER THIS FORM IF NO USER LOGGED IN*/}
+          <form style={{display: 'flex', flexDirection: 'column'}} onSubmit={this.submit}>
+            <label>Email</label>
+            <input type='text' name='email' />
+
+          <CardElement />
+          <button type='submit'>Purchase</button>
+          </form>
+        </div>
+      ) : (
+        <React.Fragment>
+          <h1>Purchase Complete</h1>
+          <p>Come by and pick up your pogo. You know where to find us!</p>
+        </React.Fragment>
+      )
+
     );
   }
 }
