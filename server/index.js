@@ -6,6 +6,7 @@ const session = require('express-session')
 const passport = require('passport')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const db = require('./db')
+const {Order, Product}= require('./db/models')
 const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 8080
 const app = express()
@@ -73,12 +74,14 @@ const createApp = () => {
   // Stripe API
   app.post("/charge", async (req, res) => {
     try {
-      let {status} = await stripe.charges.create({
+      let charge = await stripe.charges.create({
         amount: req.body.amount,
         currency: "usd",
         description: req.body.description,
         source: req.body.source
       });
+
+      const {status} = charge
       res.json({status});
     } catch (err) {
       res.status(500).end();
