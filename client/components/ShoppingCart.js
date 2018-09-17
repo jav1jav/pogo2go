@@ -13,23 +13,25 @@ class ShoppingCart extends Component {
 
   async componentDidMount() {
     let {user, isLoggedIn} = this.props
+    const productListOnLocalStorage = JSON.parse(
+      window.localStorage.getItem('productList')
+    )
+    this.setState({
+      productList: productListOnLocalStorage ? productListOnLocalStorage : []
+    })
 
     if (isLoggedIn) {
       const userId = user.id
       await this.props.fetchUserData(userId)
       const aUser = this.props.user
-      this.setState(
-        aUser.orders.length
-          ? aUser.orders.find(order => !order.isPurchased).products
-          : []
-      )
-    } else {
-      const productListOnLocalStorage = JSON.parse(
-        window.localStorage.getItem('productList')
-      )
-      this.setState({
-        productList: productListOnLocalStorage ? productListOnLocalStorage : []
-      })
+      if (!this.state.productList) {
+        // go see if there's a shopping cart on the user, and if so populate local state
+        this.setState(
+          aUser.orders.length
+            ? aUser.orders.find(order => !order.isPurchased).products
+            : []
+        )
+      }
     }
   }
 
@@ -46,19 +48,12 @@ class ShoppingCart extends Component {
       : 0
 
     const removeItem = removedItemId => {
-      if (isLoggedIn) {
-        //dispatch thunk to remove item from order
-      } else {
-        //update product list in localStorage
-        let cartList = JSON.parse(window.localStorage.getItem('productList'))
-        cartList.splice(
-          cartList.findIndex(item => item.id === removedItemId),
-          1
-        )
-        console.log('cartList', cartList)
-        this.setState({productList: cartList})
-        window.localStorage.setItem('productList', JSON.stringify(cartList))
-      }
+      //update product list in localStorage
+      let cartList = JSON.parse(window.localStorage.getItem('productList'))
+      cartList.splice(cartList.findIndex(item => item.id === removedItemId), 1)
+      console.log('cartList', cartList)
+      this.setState({productList: cartList})
+      window.localStorage.setItem('productList', JSON.stringify(cartList))
     }
 
     // if you're logged in but you don't have a user, you have to show loading till we get the user from the update of redux state in componentDidMount
