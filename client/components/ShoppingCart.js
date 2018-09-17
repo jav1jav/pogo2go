@@ -23,12 +23,12 @@ class ShoppingCart extends Component {
     if (isLoggedIn) {
       const userId = user.id
       await this.props.fetchUserData(userId)
-      const aUser = this.props.user
+      // const user = this.props.user
       if (!this.state.productList) {
         // go see if there's a shopping cart on the user, and if so populate local state
         this.setState(
-          aUser.orders.length
-            ? aUser.orders.find(order => !order.isPurchased).products
+          user.orders.length
+            ? user.orders.find(order => !order.isPurchased).products
             : []
         )
       }
@@ -59,7 +59,7 @@ class ShoppingCart extends Component {
     // if you're logged in but you don't have a user, you have to show loading till we get the user from the update of redux state in componentDidMount
     // or
     // if you're not loggged in and there's no productList on local storage we have to render a blank cart
-    //    if (isLoggedIn && aUser)  {
+    //    if (isLoggedIn && user)  {
     if (false) {
       //currently forcing the else condition while testing use of localStorage
       return <div>Loading!</div>
