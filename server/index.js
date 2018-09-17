@@ -12,6 +12,7 @@ const app = express()
 const socketio = require('socket.io')
 module.exports = app
 
+// OB: security issue below! never commit a secret! use secrets.js in development and the config var settings in production (heroku)
 const stripe = require("stripe")("sk_test_lkIre3CrUTNq4sv0XEqlKu3o");
 
 // This is a global Mocha hook, used for resource cleanup.
@@ -57,6 +58,7 @@ const createApp = () => {
   // session middleware with passport
   app.use(
     session({
+      // OB: potentially another security problem
       secret: process.env.SESSION_SECRET || 'my best friend is Cody',
       store: sessionStore,
       resave: false,
@@ -74,6 +76,7 @@ const createApp = () => {
   app.post("/charge", async (req, res) => {
     try {
       let {status} = await stripe.charges.create({
+        // OB: should calculate amount here, not receive it
         amount: req.body.amount,
         currency: "usd",
         description: req.body.description,

@@ -22,6 +22,7 @@ class ShoppingCart extends Component {
 
     if (isLoggedIn) {
       const userId = user.id
+      // OB: shouldn't be necessary, user data should already be on `this.props.user`
       await this.props.fetchUserData(userId)
       const aUser = this.props.user
       if (!this.state.productList) {
@@ -41,6 +42,7 @@ class ShoppingCart extends Component {
 
     // assuming that if you're logged in we're pulling from state (I think there are corner cases that will be screwed) then
 
+    // OB: anything not stricly related to view logic could be moved into some utility function
     const orderTotal = productList.length
       ? productList
           .map(product => Number(product.price))

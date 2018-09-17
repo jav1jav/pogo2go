@@ -35,6 +35,7 @@ class Routes extends Component {
         {/* TEMPORARY COMPONENT TO TEST STRIPE - REMOVE BEFORE COMMIT */}
         <Route exact path="/checkout" component={StripeCheckout} />
         {/* Temporary route below. Should only show up when logged in.*/}
+        {/* OB: dead code */}
         <Route path="/home" component={UserHome} />
         <Route exact path="/" component={LandingPage} />
         {isLoggedIn && (

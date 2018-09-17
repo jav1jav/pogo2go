@@ -17,6 +17,7 @@ class CheckoutForm extends Component {
 
     let response = await axios.post('/charge', {
       source: token.id,
+      // OB: security issue, amount should be determined server side
       amount: 30099,
       description: 'NEW DESCRIPTION!'
     })

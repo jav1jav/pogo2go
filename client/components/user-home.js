@@ -6,6 +6,7 @@ import {fetchUserData} from '../store/userReducer'
 export class UserHome extends Component {
   componentDidMount() {
     // TODO: Needs to be hooked up to state
+    // OB: shouldn't be necessary, user data should already be on the store state as `storeState.user`
     this.props.getUserData(4)
   }
 
@@ -35,7 +36,8 @@ export class UserHome extends Component {
                     </ul>
                     <hr />
                   </div>
-                ) : (< span key={order.id}/>) )}
+                  // OB: bugfix below
+                ) : (<span key={order.id}/>) )}
               </div>
             </div>
           </div>

@@ -3,6 +3,7 @@ const db = require('../db')
 const {User, Order, Product} = require('../db/models')
 module.exports = router
 
+// OB: should probably only be possible for admins
 router.get('/', async (req, res, next) => {
   try {
     const users = await User.findAll({
@@ -17,6 +18,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+// OB: should probably only be possible if you are that logged in user
 router.get('/:id', async (req, res, next) => {
   const {id} = req.params
   try {
