@@ -8,16 +8,20 @@ const OrderList = db.model('OrderList')
 router.get('/:id', async (req, res, next) => {
   const orderId = req.params.id
   try {
-    const anOrder = await Order.findById(orderId)
-    const orderItems = await OrderList.findAll({
-      where: {orderId: orderId}
+    const anOrder = await Order.findById(orderId, {
+      include: [Product]
     })
-    res.json({anOrder, orderItems})
+    const total = anOrder.products
+      .map(el => Number(el.price))
+      .reduce(function(accumulator, currentValue) {
+        return accumulator + currentValue
+      }, 0)
+
+    res.json({anOrder, total})
   } catch (error) {
     next(error)
   }
 })
-
 
 router.get('/', async (req, res, next) => {
   try {

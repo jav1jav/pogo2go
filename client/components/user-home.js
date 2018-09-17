@@ -5,7 +5,8 @@ import {fetchUserData} from '../store/userReducer'
 
 export class UserHome extends Component {
   componentDidMount() {
-    this.props.getUserData(1)
+    // TODO: Needs to be hooked up to state
+    this.props.getUserData(4)
   }
 
   render() {
@@ -24,7 +25,7 @@ export class UserHome extends Component {
             <div>
               <h2>Order History</h2>
               <div>
-                {this.props.user.orders.map(order => (
+                {this.props.user.orders.map(order => order.isPurchased ? (
                   <div className="single-order" key={order.id}>
                     <h4>{order.createdAt.split('T')[0]}</h4>
                     <ul>
@@ -34,7 +35,7 @@ export class UserHome extends Component {
                     </ul>
                     <hr />
                   </div>
-                ))}
+                ) : (< span key={order.id}/>) )}
               </div>
             </div>
           </div>
