@@ -10,42 +10,38 @@ class CheckoutForm extends Component {
   }
 
   async submit(ev) {
-    let {token} = await this.props.stripe.createToken({name: (event.target.firstName + ' ' + event.target.lastName)});
+    ev.preventDefault();
+    let {token} = await this.props.stripe.createToken({name:
+      ev.target.email.value
+    });
 
-    // let response = await fetch("/charge", {
-    //   method: "POST",
-    //   headers: {"Content-Type": "text/plain"},
-    //   body: token.id
-    // });
     let response = await axios.post('/charge', {
       source: token.id,
       amount: 30099,
       description: 'NEW DESCRIPTION!'
     })
-    console.log('RESPONSE: ', response)
 
-    if (response.ok) this.setState({complete: true});
+    if (response.status === 200) this.setState({complete: true});
 }
 
-
   render() {
-    if (this.state.complete) return <h1>Purchase Complete</h1>;
+    if (this.state.complete) return (
+      <React.Fragment>
+        <h1>Purchase Complete</h1>
+        <p>Come by and pick up your pogo. You know where to find us!</p>
+      </React.Fragment>
+    );
 
     return (
       <div className="checkout">
         <p>Would you like to complete the purchase?</p>
-        <form>
-          <label>First Name</label>
-          <input type='text' name='firstName'/>
-          <label>Last Name</label>
-          <input type='text' name='lastName'/>
-          <label>Address</label>
-          <input type='text' name='address'/>
-          <label>Country</label>
-          <input type='text' name='country'/>
-        </form>
+        <form style={{display: 'flex', flexDirection: 'column'}} onSubmit={this.submit}>
+          <label>Email</label>
+          <input type='text' name='email' />
+
         <CardElement />
-        <button type='submit' onClick={this.submit}>Send</button>
+        <button type='submit'>Purchase</button>
+        </form>
       </div>
     );
   }

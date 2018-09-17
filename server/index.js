@@ -70,6 +70,7 @@ const createApp = () => {
   app.use('/auth', require('./auth'))
   app.use('/api', require('./api'))
 
+  // Stripe API
   app.post("/charge", async (req, res) => {
     try {
       let {status} = await stripe.charges.create({
@@ -78,7 +79,6 @@ const createApp = () => {
         description: req.body.description,
         source: req.body.source
       });
-      console.log('STATUS ====> ', status)
       res.json({status});
     } catch (err) {
       res.status(500).end();
