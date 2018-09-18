@@ -10,6 +10,7 @@ import SingleProduct from './components/SingleProduct'
 import Error404 from './components/Error404'
 import StripeCheckout from './components/StripeCheckout.js'
 import ShoppingCart from './components/ShoppingCart'
+import {fetchUserData} from './store/userReducer'
 
 /**
  * COMPONENT
@@ -20,7 +21,11 @@ class Routes extends Component {
   }
 
   render() {
-    const {isLoggedIn} = this.props
+    const {user, isLoggedIn} = this.props
+    // This call is to load the cart data at the top of the component hiearachy
+    // to handle the case where someone hard refreshes on the ShoppingCart or
+    // Checkout Page components
+    isLoggedIn && !user.orders && this.props.fetchUserData(user.id)
 
     return (
       <Switch>
@@ -52,12 +57,16 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
+    user: state.user, // not part of boiler plate, but see line 26 for clarifying comment
     isLoggedIn: !!state.user.id
   }
 }
 
 const mapDispatch = dispatch => {
+
   return {
+    // fetchUserData not part of boiler plate, but see line 26 for clarifying comment
+    fetchUserData: userId => dispatch(fetchUserData(userId)),
     loadInitialData() {
       dispatch(me())
     }
