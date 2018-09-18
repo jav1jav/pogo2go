@@ -3,6 +3,14 @@ import {connect} from 'react-redux'
 import {fetchUserData} from '../store/userReducer'
 import {Link} from 'react-router-dom'
 
+const orderTotal = productList => {
+  return productList.length
+    ? productList
+        .map(product => Number(product.price))
+        .reduce((curr, acc) => curr + acc, 0)
+    : 0
+}
+
 class ShoppingCart extends Component {
   constructor(props) {
     super(props)
@@ -39,12 +47,6 @@ class ShoppingCart extends Component {
     let productList = this.state.productList
 
     // assuming that if you're logged in we're pulling from state (I think there are corner cases that will be screwed) then
-
-    const orderTotal = productList.length
-      ? productList
-          .map(product => Number(product.price))
-          .reduce((curr, acc) => curr + acc, 0)
-      : 0
 
     const removeItem = removedItemId => {
       //update product list in localStorage
@@ -92,7 +94,7 @@ class ShoppingCart extends Component {
                   <td>
                     <b>total</b>
                   </td>
-                  <td>{orderTotal}</td>
+                  <td>{orderTotal(productList)}</td>
                 </tr>
               </tbody>
             </table>
