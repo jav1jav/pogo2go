@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchUserData} from '../store/userReducer'
+import {fetchUserData, deleteAnItem} from '../store/userReducer'
 import {Link} from 'react-router-dom'
-import { orderTotal } from '../../utils/utils'
+import {orderTotal} from '../../utils/utils'
 
 class ShoppingCart extends Component {
   constructor(props) {
@@ -20,9 +20,9 @@ class ShoppingCart extends Component {
     if (isLoggedIn) {
       await this.props.fetchUserData(user.id)
 
-    // Else user is not logged in, so pull cart data from the localStorage, and
-    // set local component state with that list of products (or empty array if
-    // not found)
+      // Else user is not logged in, so pull cart data from the localStorage, and
+      // set local component state with that list of products (or empty array if
+      // not found)
     } else {
       const productListOnLocalStorage = JSON.parse(
         window.localStorage.getItem('productList')
@@ -40,18 +40,30 @@ class ShoppingCart extends Component {
     // either the products on the order found on the user object on props,
     // or we're pulling the products from localStorage which are stored in
     // the component's local state
+    const loggedInUserCart = user.orders
+      ? user.orders.find(order => !order.isPurchased)
+      : []
     const productList =
       isLoggedIn && user.orders
-        ? user.orders.find(order => !order.isPurchased).products
+        ? loggedInUserCart.products
         : this.state.productList
 
     const removeItem = removedItemId => {
-      //update product list in localStorage
-      let cartList = JSON.parse(window.localStorage.getItem('productList'))
-      cartList.splice(cartList.findIndex(item => item.id === removedItemId), 1)
-      console.log('cartList', cartList)
-      this.setState({productList: cartList})
-      window.localStorage.setItem('productList', JSON.stringify(cartList))
+      console.log('in Remove Item')
+      console.log('isLoggedIn? ', isLoggedIn)
+      if (isLoggedIn) {
+        const orderId = loggedInUserCart.id
+        this.props.deleteAnItem(orderId, removedItemId)
+      } else {
+        //update product list in localStorage
+        let cartList = JSON.parse(window.localStorage.getItem('productList'))
+        cartList.splice(
+          cartList.findIndex(item => item.id === removedItemId),
+          1
+        )
+        this.setState({productList: cartList})
+        window.localStorage.setItem('productList', JSON.stringify(cartList))
+      }
     }
 
     return (
@@ -101,7 +113,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchUserData: userId => dispatch(fetchUserData(userId))
+  fetchUserData: userId => dispatch(fetchUserData(userId)),
+  deleteAnItem: (orderId, productId) =>
+    dispatch(deleteAnItem(orderId, productId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCart)

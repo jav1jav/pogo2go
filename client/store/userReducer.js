@@ -7,7 +7,7 @@ import history from '../history'
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
 const GOT_USER_DATA = 'GOT_USER_DATA'
-const DELETED_AN_ITEM = 'DELETED_AN_ITEM';
+const DELETED_AN_ITEM = 'DELETED_AN_ITEM'
 
 /**
  * INITIAL STATE
@@ -19,7 +19,7 @@ const defaultUser = {}
  */
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
-const gotUserData = (data) => ({type: GOT_USER_DATA, data})
+const gotUserData = data => ({type: GOT_USER_DATA, data})
 
 const deletedAnItem = item => {
   return {
@@ -40,11 +40,10 @@ export const me = () => async dispatch => {
   }
 }
 
-export const fetchUserData = (userId) => async dispatch => {
+export const fetchUserData = userId => async dispatch => {
   try {
-    const {data} = await axios.get(`/api/users/${userId}`);
+    const {data} = await axios.get(`/api/users/${userId}`)
     dispatch(gotUserData(data))
-
   } catch (err) {
     console.error(err)
   }
@@ -79,10 +78,12 @@ export const logout = () => async dispatch => {
 export const deleteAnItem = (orderId, productId) => {
   return async dispatch => {
     try {
-      const { data: deletedItem } = await axios.delete(`/api/orders/${orderId}/${productId}`);
-      // dispatch(deletedAnItem(deletedItem))
+      const {data: deletedItem} = await axios.delete(
+        `/api/orders/${orderId}/${productId}`
+      )
+      dispatch(deletedAnItem(deletedItem))
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
   }
 }
@@ -98,9 +99,15 @@ export default function(state = defaultUser, action) {
       return defaultUser
     case GOT_USER_DATA:
       return action.data
-    // case DELETED_AN_ITEM: {
-    //   return {...state, orders: state.orders.filter(order => order.isPurchased).filter(order => !order.isPurchased).filter(item => item.id !== action.item.id)}
-    // }
+    case DELETED_AN_ITEM: {
+      return {
+        ...state,
+        orders: state.orders
+          .find(order => !order.isPurchased)
+          .filter(order => order.isPurchased)
+          .filter(item => item.id !== action.item.id)
+      }
+    }
     default:
       return state
   }
