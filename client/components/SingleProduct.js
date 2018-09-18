@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchAProductFromDB, fetchProductsFromDB} from '../store/productReducer'
+import {addAnItemToOrder} from '../store/orderReducer'
+
 import {NavLink} from 'react-router-dom'
 
 // updating single prod page so that button to add item to cart, adds item to db
@@ -18,9 +20,10 @@ class SingleProduct extends Component {
   }
 
   render() {
-    const isLoggedIn = false;
+    const {user, isLoggedIn, products} = this.props
+    const orderId = user.orders.find(order => !order.isPurchased).id
     const productId = Number(this.props.match.params.id)
-    const allProducts = this.props.products
+    const allProducts = products
     //Since the componentDidMount hasn't run on the initial render, we are
     //initializing values so the aProduct does not error out on the inital React render
     const aProduct = allProducts.length
@@ -31,11 +34,12 @@ class SingleProduct extends Component {
           price: '',
           description: ''
         }
-
+ console.log('singleProduct.js | isLoggedIn in component', isLoggedIn)
     const writeToCart = () => {
       //event.preventDefault
+      console.log('singleProduct.js | writeToCart ', isLoggedIn)
       if (isLoggedIn) {
-        //dispatch thunk to create order
+        addAnItemToOrder(orderId, productId)
 
       } else {
         //write locally
@@ -71,12 +75,16 @@ class SingleProduct extends Component {
 }
 
 const mapStateToProps = state => ({
-  products: state.products
+  products: state.products,
+  orders: state.orders,
+  user: state.user,
+  isLoggedIn: !!state.user.id
 })
 
 const mapDispatchToProps = dispatch => ({
   getAProduct: productId => dispatch(fetchAProductFromDB(productId)),
-  getAllProducts: () => dispatch(fetchProductsFromDB())
+  getAllProducts: () => dispatch(fetchProductsFromDB()),
+  addAnItemToOrder: (orderId, productId) => dispatch(addAnItemToOrder(orderId, productId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)
