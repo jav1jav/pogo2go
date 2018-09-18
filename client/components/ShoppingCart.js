@@ -21,9 +21,14 @@ class ShoppingCart extends Component {
 
   async componentDidMount() {
     const {user, isLoggedIn} = this.props
-
+    // If user is logged in, then send thunk to fetch the user data, which will
+    // then be used to generate list of products
     if (isLoggedIn) {
       await this.props.fetchUserData(user.id)
+
+      // Else user is not logged in, so pull cart data from the localStorage, and
+      // set local component state with that list of products (or empty array if
+      // not found)
     } else {
       const productListOnLocalStorage = JSON.parse(
         window.localStorage.getItem('productList')
@@ -36,12 +41,15 @@ class ShoppingCart extends Component {
 
   render() {
     const {user, isLoggedIn} = this.props
+
+    // Provided ComponentDidMount does it's job, then productList gets assigned
+    // either the products on the order found on the user object on props,
+    // or we're pulling the products from localStorage which are stored in
+    // the component's local state
     const productList =
       isLoggedIn && user.orders
         ? user.orders.find(order => !order.isPurchased).products
         : this.state.productList
-
-    // assuming that if you're logged in we're pulling from state (I think there are corner cases that will be screwed) then
 
     const removeItem = removedItemId => {
       //update product list in localStorage
@@ -51,59 +59,46 @@ class ShoppingCart extends Component {
       this.setState({productList: cartList})
       window.localStorage.setItem('productList', JSON.stringify(cartList))
     }
-
-    // if you're logged in but you don't have a user, you have to show loading till we get the user from the update of redux state in componentDidMount
-    // or
-    // if you're not loggged in and there's no productList on local storage we have to render a blank cart
-    //    if (isLoggedIn && user)  {
-    // if (false) {
-    //   //currently forcing the else condition while testing use of localStorage
-    //   return <div>Loading!</div>
-    // } else {
-      return (
-        <React.Fragment>
-          <div>
-            <table>
-              <tbody>
-                <tr>
-                  <th>product name</th>
-                  <th>price</th>
-                </tr>
-                {productList.map(prod => {
-                  return (
-                    <tr key={prod.id}>
-                      <td>{prod.name}</td>
-                      <td>{prod.price}</td>
-                      <td>
-                        <button
-                          type="submit"
-                          onClick={() => removeItem(prod.id)}
-                        >
-                          remove item
-                        </button>
-                      </td>
-                    </tr>
-                  )
-                })}
-                <tr>
-                  <td>
-                    <b>total</b>
-                  </td>
-                  <td>{orderTotal(productList)}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div>
-            <Link to="/store">Continue Shopping</Link>
-            <br />
-            <Link to="/checkout">Checkout</Link>
-          </div>
-        </React.Fragment>
-      )
-    }
+    return (
+      <React.Fragment>
+        <div>
+          <table>
+            <tbody>
+              <tr>
+                <th>product name</th>
+                <th>price</th>
+              </tr>
+              {productList.map(prod => {
+                return (
+                  <tr key={prod.id}>
+                    <td>{prod.name}</td>
+                    <td>{prod.price}</td>
+                    <td>
+                      <button type="submit" onClick={() => removeItem(prod.id)}>
+                        remove item
+                      </button>
+                    </td>
+                  </tr>
+                )
+              })}
+              <tr>
+                <td>
+                  <b>total</b>
+                </td>
+                <td>{orderTotal(productList)}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <Link to="/store">Continue Shopping</Link>
+          <br />
+          <Link to="/checkout">Checkout</Link>
+        </div>
+      </React.Fragment>
+    )
   }
-// }
+}
 
 const mapStateToProps = state => ({
   user: state.user,
