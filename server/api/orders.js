@@ -47,15 +47,3 @@ router.delete('/:orderId/:productId', async (req, res, next) => {
 })
 
 module.exports = router
-
-
-// order number:
-// productId:
-
-// const orderData = await Order.findOne({
-//   where: {
-//     userId: id,
-//     isPurchased: false,
-//   },
-//   include: [Product]
-// })

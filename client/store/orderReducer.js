@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 //action strings
-const GOT_AN_ORDER = 'GOT_AN_ORDER'
+const GOT_AN_ORDER = 'GOT_AN_ORDER';
 
 //action creators
 const gotAnOrderFromServer = order => {
