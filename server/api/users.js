@@ -25,7 +25,14 @@ router.get('/:id', async (req, res, next) => {
       where: {userId: id},
       include: [Product]
     })
-    res.json({user: userData, orders: orderData})
+
+    // this will be received as state.user
+    const response = {
+      ...userData.dataValues, orders: orderData
+    }
+    // console.log('API RESPONSE: ', response)
+    // res.json({user: userData, orders: orderData})
+    res.json(response);
   } catch (error) {
     next(error)
   }
