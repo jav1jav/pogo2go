@@ -1,4 +1,7 @@
+# Node modules
 node_modules
+# Heroku
+whispering-hollows-37267
 public/bundle.js
 public/bundle.js.map
 secrets.js

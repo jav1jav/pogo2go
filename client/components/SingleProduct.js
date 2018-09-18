@@ -1,26 +1,20 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchAProductFromDB, fetchProductsFromDB} from '../store/productReducer'
-import {NavLink} from 'react-router-dom'
+import {addAnItemToOrder} from '../store/orderReducer'
 
 class SingleProduct extends Component {
   componentDidMount() {
-    // if (this.props.products.length) {
     this.props.getAllProducts()
-    // } else {
-    //   // const productId = this.props.match.params.id
-    //   // this.props.getAProduct(productId)
-    // }
   }
 
   render() {
-    const isLoggedIn = false;
+    const {user, isLoggedIn, products} = this.props
     const productId = Number(this.props.match.params.id)
-    const allProducts = this.props.products
-    //Since the componentDidMount hasn't run on the initial render, we are
-    //initializing values so the aProduct does not error out on the inital React render
-    const aProduct = allProducts.length
-      ? allProducts.find(el => el.id === productId)
+
+    // Initialize aProduct prevents rendering errors before componentDidMount
+    const aProduct = products.length
+      ? products.find(el => el.id === productId)
       : {
           name: '',
           image: '',
@@ -29,11 +23,10 @@ class SingleProduct extends Component {
         }
 
     const writeToCart = () => {
-      //event.preventDefault
       if (isLoggedIn) {
-        //dispatch thunk to create order
-      } else {
-        //write locally
+        const orderId = user.orders.find(order => !order.isPurchased).id
+        this.props.addAnItemToOrder(orderId, productId)
+     } else {
         const productList = JSON.parse(window.localStorage.getItem('productList')) || []
         productList.push(aProduct)
         window.localStorage.setItem('productList', JSON.stringify(productList))
@@ -63,12 +56,16 @@ class SingleProduct extends Component {
 }
 
 const mapStateToProps = state => ({
-  products: state.products
+  products: state.products,
+  orders: state.orders,
+  user: state.user,
+  isLoggedIn: !!state.user.id
 })
 
 const mapDispatchToProps = dispatch => ({
   getAProduct: productId => dispatch(fetchAProductFromDB(productId)),
-  getAllProducts: () => dispatch(fetchProductsFromDB())
+  getAllProducts: () => dispatch(fetchProductsFromDB()),
+  addAnItemToOrder: (orderId, productId) => dispatch(addAnItemToOrder(orderId, productId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)

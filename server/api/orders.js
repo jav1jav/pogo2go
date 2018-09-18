@@ -23,10 +23,15 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-router.get('/', async (req, res, next) => {
+// need to protect this route with determining if user is logged in,
+// and make sure the order updated has isPurchased = false
+router.post('/:orderId/:productId', async (req, res, next) => {
+  const orderId = req.params.orderId
+  const productId = req.params.productId
   try {
-    const allOrders = await Order.findAll()
-    res.json(allOrders)
+    await OrderList.create({orderId, productId})
+    const updatedOrder = await Order.findById(orderId)
+    res.json(updatedOrder)
   } catch (error) {
     next(error)
   }

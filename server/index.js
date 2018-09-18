@@ -6,14 +6,15 @@ const session = require('express-session')
 const passport = require('passport')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const db = require('./db')
-const {Order, Product}= require('./db/models')
+const {Order, Product} = require('./db/models')
 const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 8080
 const app = express()
 const socketio = require('socket.io')
+const { orderTotal } = require('../utils/utils')
 module.exports = app
 
-const stripe = require("stripe")("sk_test_lkIre3CrUTNq4sv0XEqlKu3o");
+const stripe = require('stripe')('sk_test_lkIre3CrUTNq4sv0XEqlKu3o')
 
 // This is a global Mocha hook, used for resource cleanup.
 // Otherwise, Mocha v4+ never quits after tests.
@@ -44,7 +45,7 @@ passport.deserializeUser(async (id, done) => {
 })
 
 const createApp = () => {
-  app.use(require("body-parser").text());
+  app.use(require('body-parser').text())
   // logging middleware
   app.use(morgan('dev'))
 
@@ -72,24 +73,39 @@ const createApp = () => {
   app.use('/api', require('./api'))
 
   // Stripe API
-  app.post("/charge", async (req, res) => {
+  app.post('/charge', async (req, res) => {
     try {
+      // Get userId from front end
+      const { id } = req.user;
+      // Taking userId, grab total of open order
+      const orderData = await Order.findOne({
+        where: {
+          userId: id,
+          isPurchased: false,
+        },
+        include: [Product]
+      })
+
+      // Get the list of products and return a string containing only there names, which will be used as the description for Stripe
+      const productsString = orderData.products.map(product => product.name).join(', ');
+
+      const totalCost = orderTotal(orderData.products)*100;
 
       // Creates a new charge and sends to Stripe's API
       let charge = await stripe.charges.create({
-        amount: req.body.amount,
-        currency: "usd",
-        description: req.body.description,
+        // redefine amount to be total we get from above
+        amount: totalCost,
+        currency: 'usd',
+        description: productsString,
         source: req.body.source
-      });
-
+      })
       const {status} = charge
-      res.json({status});
+      res.json({status})
     } catch (err) {
-      res.status(500).end();
+      console.error(err);
+      res.status(500).end()
     }
-  });
-
+  })
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')))

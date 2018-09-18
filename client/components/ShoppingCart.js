@@ -2,14 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchUserData} from '../store/userReducer'
 import {Link} from 'react-router-dom'
-
-const orderTotal = productList => {
-  return productList.length
-    ? productList
-        .map(product => Number(product.price))
-        .reduce((curr, acc) => curr + acc, 0)
-    : 0
-}
+import { orderTotal } from '../../utils/utils'
 
 class ShoppingCart extends Component {
   constructor(props) {
