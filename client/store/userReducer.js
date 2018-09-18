@@ -35,7 +35,6 @@ export const me = () => async dispatch => {
 export const fetchUserData = (userId) => async dispatch => {
   try {
     const {data} = await axios.get(`/api/users/${userId}`);
-    console.log("DATA ====> ", data);
     dispatch(gotUserData(data))
 
   } catch (err) {
