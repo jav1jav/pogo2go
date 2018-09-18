@@ -20,7 +20,7 @@ class CheckoutForm extends Component {
     let email = ''
 
     if (this.props.isLoggedIn) {
-      email = this.state.user.email;
+      email = this.props.user.email;
     } else {
       email = ev.target.email.value;
     }
