@@ -7,7 +7,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "heroku-postbuild": "echo This runs afterwards.",
+    "heroku-postbuild": "npm run seed",
     "build-client": "webpack",
     "build-client-watch": "webpack -w",
     "deploy": "script/deploy",
