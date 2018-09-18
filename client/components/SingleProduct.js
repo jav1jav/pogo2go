@@ -3,6 +3,10 @@ import {connect} from 'react-redux'
 import {fetchAProductFromDB, fetchProductsFromDB} from '../store/productReducer'
 import {NavLink} from 'react-router-dom'
 
+// updating single prod page so that button to add item to cart, adds item to db
+// update write to cart to handle logged in case
+//  dispatch so that redux will make post to express to update db
+
 class SingleProduct extends Component {
   componentDidMount() {
     // if (this.props.products.length) {
@@ -32,6 +36,7 @@ class SingleProduct extends Component {
       //event.preventDefault
       if (isLoggedIn) {
         //dispatch thunk to create order
+
       } else {
         //write locally
         const productList = JSON.parse(window.localStorage.getItem('productList')) || []
