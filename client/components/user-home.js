@@ -5,26 +5,28 @@ import {fetchUserData} from '../store/userReducer'
 
 export class UserHome extends Component {
   componentDidMount() {
-    this.props.getUserData(1)
+    // TODO: Needs to be hooked up to state
+    this.props.getUserData(this.props.user.id)
   }
 
   render() {
     return (
       <div>
-        {!this.props.user.user ? (
+        {!this.props.user.orders ? (
           <p>loading...</p>
         ) : (
           <div>
-            <h3>Welcome, {this.props.user.user.name}</h3>
+            <h3>Welcome, {this.props.user.name}</h3>
             <div>
-              <img src={this.props.user.user.imageUrl} />
-              <h3>{this.props.user.user.name}</h3>
-              <p>{this.props.user.user.email}</p>
+              <img src={this.props.user.imageUrl} />
+              <h3>{this.props.user.name}</h3>
+              <p>{this.props.user.email}</p>
             </div>
             <div>
               <h2>Order History</h2>
+              {console.log('USER: ', this.props.user)}
               <div>
-                {this.props.user.orders.map(order => (
+                {this.props.user.orders.map(order => order.isPurchased ? (
                   <div className="single-order" key={order.id}>
                     <h4>{order.createdAt.split('T')[0]}</h4>
                     <ul>
@@ -34,7 +36,7 @@ export class UserHome extends Component {
                     </ul>
                     <hr />
                   </div>
-                ))}
+                ) : (< span key={order.id}/>) )}
               </div>
             </div>
           </div>
