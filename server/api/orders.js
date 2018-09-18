@@ -37,6 +37,18 @@ router.post('/:orderId/:productId', async (req, res, next) => {
   }
 })
 
-
+router.delete('/:orderId/:productId', async (req, res, next) => {
+  try {
+    const deletedItem = await OrderList.destroy({
+      where: {
+        orderId: req.params.orderId,
+        productId: req.params.productId
+      }
+    })
+    res.json(deletedItem).status(200);
+  } catch (error) {
+    next(error);
+  }
+})
 
 module.exports = router
