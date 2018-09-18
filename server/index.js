@@ -11,6 +11,7 @@ const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 8080
 const app = express()
 const socketio = require('socket.io')
+const { orderTotal } = require('../utils/utils')
 module.exports = app
 
 const stripe = require('stripe')('sk_test_lkIre3CrUTNq4sv0XEqlKu3o')
@@ -75,20 +76,33 @@ const createApp = () => {
   app.post('/charge', async (req, res) => {
     try {
       // Get userId from front end
+      const { id } = req.user;
       // Taking userId, grab total of open order
-      const {userId} = req.body
+      const orderData = await Order.findOne({
+        where: {
+          userId: id,
+          isPurchased: false,
+        },
+        include: [Product]
+      })
+
+      // Get the list of products and return a string containing only there names, which will be used as the description for Stripe
+      const productsString = orderData.products.map(product => product.name).join(', ');
+
+      const totalCost = orderTotal(orderData.products)*100;
+
       // Creates a new charge and sends to Stripe's API
-      console.log('CODYS USER ID*****', req.body.userId)
       let charge = await stripe.charges.create({
         // redefine amount to be total we get from above
-        amount: 9000,
+        amount: totalCost,
         currency: 'usd',
-        description: req.body.description,
+        description: productsString,
         source: req.body.source
       })
       const {status} = charge
       res.json({status})
     } catch (err) {
+      console.error(err);
       res.status(500).end()
     }
   })

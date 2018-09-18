@@ -16,16 +16,20 @@ class CheckoutForm extends Component {
   }
 
   async submit(ev) {
-    ev.preventDefault()
+    ev.preventDefault();
+    let email = ''
+
+    if (this.props.isLoggedIn) {
+      email = this.state.user.email;
+    } else {
+      email = ev.target.email.value;
+    }
     let {token} = await this.props.stripe.createToken({
-      name: ev.target.email.value
+      name: email
     })
 
     let response = await axios.post('/charge', {
       source: token.id,
-      // amount: 30099,
-      description: 'NEW DESCRIPTION!',
-      userId: this.props.user.id
     })
 
     if (response.status === 200) this.setState({complete: true})
@@ -33,11 +37,8 @@ class CheckoutForm extends Component {
 
   async componentDidMount() {
     const {user, isLoggedIn} = this.props
-    console.log("PROPS ===> ", this.props)
-    console.log('STATE ===>', this.state);
     // If user is logged in, then send thunk to fetch the user data, which will then be used to generate list of products
     if (isLoggedIn) {
-      console.log('Logged in! Getting stuff!')
       await this.props.fetchUserData(user.id)
 
       // Else, user is not logged in, so pull cart data from the localStorage, and set local component state with that list of products (or empty array if not found)
@@ -58,7 +59,7 @@ class CheckoutForm extends Component {
     const productList =
       isLoggedIn && user.orders
         ? user.orders.find(order => !order.isPurchased).products
-        : [];
+        : this.state.productList;
 
     const total = productList.length ? orderTotal(productList)
     : 0
@@ -88,13 +89,20 @@ class CheckoutForm extends Component {
           </p>
           <p>Enter info to complete purchase:</p>
 
-          {/* ONLY RENDER THIS FORM IF NO USER LOGGED IN*/}
+
           <form
             className="checkout-form"
             style={{display: 'flex', flexDirection: 'column'}}
             onSubmit={this.submit}>
-            <label>Email</label>
-            <input type="text" name="email" />
+
+            {/* Only ask for a users email if no one currently logged in */}
+            {!isLoggedIn ? (
+              <React.Fragment>
+                <label>Email</label>
+                <input type="text" name="email" />
+              </React.Fragment>
+            )
+            : (<span />)}
 
             <CardElement />
             <button type="submit">Purchase</button>
