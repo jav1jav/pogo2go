@@ -16,7 +16,6 @@ class CheckoutForm extends Component {
 
   async submit(ev) {
     ev.preventDefault()
-    console.log('USER ID====>', this.props.user.id)
     let {token} = await this.props.stripe.createToken({
       name: ev.target.email.value
     })
@@ -35,7 +34,6 @@ class CheckoutForm extends Component {
     const {user, isLoggedIn} = this.props
     // If user is logged in, then send thunk to fetch the user data, which will then be used to generate list of products
     if (isLoggedIn) {
-      console.log('getting user data ...')
       await this.props.fetchUserData(user.id)
 
       // Else, user is not logged in, so pull cart data from the localStorage, and set local component state with that list of products (or empty array if not found)
@@ -51,8 +49,16 @@ class CheckoutForm extends Component {
   }
 
   render() {
-    // console.log('USER =====> ', this.props.user)
-    // console.log('ORDERS ====> ', this.props.user.orders)
+    const { orders } = this.props.user
+    const {user, isLoggedIn} = this.props
+    console.log('ORDERS ===> ', orders);
+
+    const productList =
+      isLoggedIn && user.orders
+        ? user.orders.find(order => !order.isPurchased).products
+        : this.state.productList;
+    console.log("PRODUCTS ===> ", productList)
+
     return !this.state.complete ? (
       <div className="container flex">
         <div className="checkout">
@@ -68,10 +74,6 @@ class CheckoutForm extends Component {
               <tr>
                 <td>The Commuter</td>
                 <td>$199.99</td>
-              </tr>
-              <tr>
-                <td>The Fixed Stick</td>
-                <td>$149.99</td>
               </tr>
             </tbody>
           </table>
