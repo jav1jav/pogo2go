@@ -3,13 +3,14 @@ import {connect} from 'react-redux'
 import {CardElement, injectStripe} from 'react-stripe-elements'
 import axios from 'axios'
 import {fetchUserData} from '../store/userReducer'
+import { orderTotal } from '../../utils/utils'
 
 class CheckoutForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
       complete: false,
-      user: {}
+      productList: []
     }
     this.submit = this.submit.bind(this)
   }
@@ -32,32 +33,35 @@ class CheckoutForm extends Component {
 
   async componentDidMount() {
     const {user, isLoggedIn} = this.props
+    console.log("PROPS ===> ", this.props)
+    console.log('STATE ===>', this.state);
     // If user is logged in, then send thunk to fetch the user data, which will then be used to generate list of products
     if (isLoggedIn) {
+      console.log('Logged in! Getting stuff!')
       await this.props.fetchUserData(user.id)
 
       // Else, user is not logged in, so pull cart data from the localStorage, and set local component state with that list of products (or empty array if not found)
     }
-    // else {
-    //   const productListOnLocalStorage = JSON.parse(
-    //     window.localStorage.getItem('productList')
-    //   )
-    //   this.setState({
-    //     productList: productListOnLocalStorage ? productListOnLocalStorage : []
-    //   })
-    // }
+    else {
+      const productListOnLocalStorage = JSON.parse(
+        window.localStorage.getItem('productList')
+      )
+      this.setState({
+        productList: productListOnLocalStorage ? productListOnLocalStorage : []
+      })
+    }
   }
 
   render() {
-    const { orders } = this.props.user
     const {user, isLoggedIn} = this.props
-    console.log('ORDERS ===> ', orders);
 
     const productList =
       isLoggedIn && user.orders
         ? user.orders.find(order => !order.isPurchased).products
-        : this.state.productList;
-    console.log("PRODUCTS ===> ", productList)
+        : [];
+
+    const total = productList.length ? orderTotal(productList)
+    : 0
 
     return !this.state.complete ? (
       <div className="container flex">
@@ -71,14 +75,16 @@ class CheckoutForm extends Component {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>The Commuter</td>
-                <td>$199.99</td>
-              </tr>
+              {productList.map(product => (
+                <tr key={product.id}>
+                  <td>{product.name}</td>
+                  <td>{product.price}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
           <p>
-            <span className="bold total">TOTAL: </span>TOTAL_HERE
+            <span className="bold total">TOTAL: </span>${total}
           </p>
           <p>Enter info to complete purchase:</p>
 
@@ -86,8 +92,7 @@ class CheckoutForm extends Component {
           <form
             className="checkout-form"
             style={{display: 'flex', flexDirection: 'column'}}
-            onSubmit={this.submit}
-          >
+            onSubmit={this.submit}>
             <label>Email</label>
             <input type="text" name="email" />
 
