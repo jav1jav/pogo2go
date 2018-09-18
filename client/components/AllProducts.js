@@ -9,7 +9,6 @@ class AllProducts extends Component {
   }
 
   render() {
-    console.log('PRODUCTS**', this.props.products)
     return (
       <React.Fragment>
         <h1 className="title">Choose your pogo</h1>

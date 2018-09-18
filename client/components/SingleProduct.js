@@ -3,46 +3,30 @@ import {connect} from 'react-redux'
 import {fetchAProductFromDB, fetchProductsFromDB} from '../store/productReducer'
 import {addAnItemToOrder} from '../store/orderReducer'
 
-import {NavLink} from 'react-router-dom'
-
-// updating single prod page so that button to add item to cart, adds item to db
-// update write to cart to handle logged in case
-//  dispatch so that redux will make post to express to update db
-
 class SingleProduct extends Component {
   componentDidMount() {
-    // if (this.props.products.length) {
     this.props.getAllProducts()
-    // } else {
-    //   // const productId = this.props.match.params.id
-    //   // this.props.getAProduct(productId)
-    // }
   }
 
   render() {
     const {user, isLoggedIn, products} = this.props
-    const orderId = user.orders.find(order => !order.isPurchased).id
     const productId = Number(this.props.match.params.id)
-    const allProducts = products
-    //Since the componentDidMount hasn't run on the initial render, we are
-    //initializing values so the aProduct does not error out on the inital React render
-    const aProduct = allProducts.length
-      ? allProducts.find(el => el.id === productId)
+
+    // Initialize aProduct prevents rendering errors before componentDidMount
+    const aProduct = products.length
+      ? products.find(el => el.id === productId)
       : {
           name: '',
           image: '',
           price: '',
           description: ''
         }
- console.log('singleProduct.js | isLoggedIn in component', isLoggedIn)
-    const writeToCart = () => {
-      //event.preventDefault
-      console.log('singleProduct.js | writeToCart ', isLoggedIn)
-      if (isLoggedIn) {
-        addAnItemToOrder(orderId, productId)
 
-      } else {
-        //write locally
+    const writeToCart = () => {
+      if (isLoggedIn) {
+        const orderId = user.orders.find(order => !order.isPurchased).id
+        this.props.addAnItemToOrder(orderId, productId)
+     } else {
         const productList = JSON.parse(window.localStorage.getItem('productList')) || []
         productList.push(aProduct)
         window.localStorage.setItem('productList', JSON.stringify(productList))
