@@ -21,14 +21,15 @@ class ShoppingCart extends Component {
 
   async componentDidMount() {
     const {user, isLoggedIn} = this.props
+
     // If user is logged in, then send thunk to fetch the user data, which will
     // then be used to generate list of products
     if (isLoggedIn) {
       await this.props.fetchUserData(user.id)
 
-      // Else user is not logged in, so pull cart data from the localStorage, and
-      // set local component state with that list of products (or empty array if
-      // not found)
+    // Else user is not logged in, so pull cart data from the localStorage, and
+    // set local component state with that list of products (or empty array if
+    // not found)
     } else {
       const productListOnLocalStorage = JSON.parse(
         window.localStorage.getItem('productList')
@@ -42,7 +43,7 @@ class ShoppingCart extends Component {
   render() {
     const {user, isLoggedIn} = this.props
 
-    // Provided ComponentDidMount does it's job, then productList gets assigned
+    // Provided ComponentDidMount does its job, then productList gets assigned
     // either the products on the order found on the user object on props,
     // or we're pulling the products from localStorage which are stored in
     // the component's local state
@@ -59,6 +60,7 @@ class ShoppingCart extends Component {
       this.setState({productList: cartList})
       window.localStorage.setItem('productList', JSON.stringify(cartList))
     }
+
     return (
       <React.Fragment>
         <div>
