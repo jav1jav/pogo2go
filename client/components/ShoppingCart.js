@@ -20,31 +20,26 @@ class ShoppingCart extends Component {
   }
 
   async componentDidMount() {
-    let {user, isLoggedIn} = this.props
-    const productListOnLocalStorage = JSON.parse(
-      window.localStorage.getItem('productList')
-    )
-    this.setState({
-      productList: productListOnLocalStorage ? productListOnLocalStorage : []
-    })
+    const {user, isLoggedIn} = this.props
 
     if (isLoggedIn) {
-      const userId = user.id
-      await this.props.fetchUserData(userId)
-      // const user = this.props.user
-      if (!this.state.productList) {
-        // go see if there's a shopping cart on the user, and if so populate local state
-        this.setState({
-          productList: user.orders.length ? user.orders.find(order => !order.isPurchased).products
-            : []
-        })
-      }
+      await this.props.fetchUserData(user.id)
+    } else {
+      const productListOnLocalStorage = JSON.parse(
+        window.localStorage.getItem('productList')
+      )
+      this.setState({
+        productList: productListOnLocalStorage ? productListOnLocalStorage : []
+      })
     }
   }
 
   render() {
-    let {user, isLoggedIn} = this.props
-    let productList = this.state.productList
+    const {user, isLoggedIn} = this.props
+    const productList =
+      isLoggedIn && user.orders
+        ? user.orders.find(order => !order.isPurchased).products
+        : this.state.productList
 
     // assuming that if you're logged in we're pulling from state (I think there are corner cases that will be screwed) then
 
@@ -61,10 +56,10 @@ class ShoppingCart extends Component {
     // or
     // if you're not loggged in and there's no productList on local storage we have to render a blank cart
     //    if (isLoggedIn && user)  {
-    if (false) {
-      //currently forcing the else condition while testing use of localStorage
-      return <div>Loading!</div>
-    } else {
+    // if (false) {
+    //   //currently forcing the else condition while testing use of localStorage
+    //   return <div>Loading!</div>
+    // } else {
       return (
         <React.Fragment>
           <div>
@@ -108,7 +103,7 @@ class ShoppingCart extends Component {
       )
     }
   }
-}
+// }
 
 const mapStateToProps = state => ({
   user: state.user,
