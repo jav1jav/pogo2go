@@ -1,11 +1,16 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux'
 import {CardElement, injectStripe} from 'react-stripe-elements';
 import axios from 'axios';
+import {fetchUserData} from '../store/userReducer'
 
 class CheckoutForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {complete: false};
+    this.state = {
+      complete: false,
+      user: {}
+    };
     this.submit = this.submit.bind(this);
   }
 
@@ -22,10 +27,30 @@ class CheckoutForm extends Component {
     })
 
     if (response.status === 200) this.setState({complete: true});
-}
+  }
+
+  async componentDidMount() {
+    const {user, isLoggedIn} = this.props
+    // If user is logged in, then send thunk to fetch the user data, which will then be used to generate list of products
+    if (isLoggedIn) {
+      console.log('getting user data ...')
+      await this.props.fetchUserData(user.id)
+
+    // Else, user is not logged in, so pull cart data from the localStorage, and set local component state with that list of products (or empty array if not found)
+    }
+    // else {
+    //   const productListOnLocalStorage = JSON.parse(
+    //     window.localStorage.getItem('productList')
+    //   )
+    //   this.setState({
+    //     productList: productListOnLocalStorage ? productListOnLocalStorage : []
+    //   })
+    // }
+  }
 
   render() {
-
+    console.log("USER =====> ", this.props.user)
+    console.log("ORDERS ====> ", this.props.user.orders)
     return (
       !this.state.complete ? (
         <div className='container flex'>
@@ -73,5 +98,13 @@ class CheckoutForm extends Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  user: state.user,
+  isLoggedIn: !!state.user.id
+})
 
-export default injectStripe(CheckoutForm);
+const mapDispatchToProps = dispatch => ({
+  fetchUserData: userId => dispatch(fetchUserData(userId))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(injectStripe(CheckoutForm));
