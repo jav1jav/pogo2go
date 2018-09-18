@@ -42,23 +42,20 @@ class SingleProduct extends Component {
 
     return (
       <React.Fragment>
-        <h1 className="title">{aProduct.name}</h1>
-        <div className="container flex products">
-          {' '}
-          {/* container for single products*/}
-          {/* this works but the divs/css are placeholder code only, needs to be changed */}
-          <div key={aProduct.name} className="item flex column">
-            <div className="flex column">
-              <img className="item-image" src={aProduct.image} />
+        <div className="single-product container flex column">
+          <div className="container flex column">
+            <div className="item-detail flex column">
+              <div className="flex column">
+                <div className="header">
+                  <span>{aProduct.name}</span>
+                </div>
+                <img className="item-image" src={aProduct.image} />
+                <span className='description'>{aProduct.description}</span>
+              </div>
+              <span className="footer">${aProduct.price}</span>
             </div>
-            <div>
-              <h3 className="footer">${aProduct.price}</h3>
-            </div>
-            <div className="flex column">
-              <p>{aProduct.description}</p>
-            </div>
-            <div><button type="submit" onClick={writeToCart}>Buy Me!</button></div>
           </div>
+          <button className='action-button' type="submit" onClick={writeToCart}>Add to Cart</button>
         </div>
       </React.Fragment>
     )
