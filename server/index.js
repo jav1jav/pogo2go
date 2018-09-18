@@ -74,7 +74,6 @@ const createApp = () => {
   // Stripe API
   app.post("/charge", async (req, res) => {
     try {
-
       // Creates a new charge and sends to Stripe's API
       let charge = await stripe.charges.create({
         amount: req.body.amount,
@@ -82,7 +81,7 @@ const createApp = () => {
         description: req.body.description,
         source: req.body.source
       });
-
+      //
       const {status} = charge
       res.json({status});
     } catch (err) {
