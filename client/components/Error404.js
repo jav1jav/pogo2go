@@ -6,7 +6,7 @@ const Error404 = () => {
       <h2>404</h2>
       <h1>Error: Pogo not found</h1>
       {/* automatically fetches from public folder*/}
-      <img src="/404image.jpg" />
+      <img style={{width: 'auto'}} src="/404image.jpg" />
     </div>
   );
 };
