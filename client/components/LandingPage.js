@@ -4,7 +4,7 @@ const LandingPage = () => {
   return (
     <div>
       <h1>YOU GOT TO POGO2GO</h1>
-      <img src="HomePage.jpg" />
+      <img className="generic-image" src="HomePage.jpg" />
     </div>
   )
 }

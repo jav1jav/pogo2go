@@ -58,6 +58,11 @@ button {
   border: none;
 }
 
+.generic-image {
+  width: 80%;
+  height: auto;
+}
+
 .item, .item-detail {
   margin: 0 1rem;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
