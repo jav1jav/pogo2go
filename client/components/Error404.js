@@ -2,12 +2,12 @@ import React from 'react';
 
 const Error404 = () => {
   return (
-    <React.Fragment>
+    <div className="container flex column">
       <h2>404</h2>
       <h1>Error: Pogo not found</h1>
       {/* automatically fetches from public folder*/}
-      <img className="generic-image" width="400" src="/404image.jpg" />
-    </React.Fragment>
+      <img src="/404image.jpg" />
+    </div>
   );
 };
 

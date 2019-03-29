@@ -2,10 +2,10 @@ import React from 'react'
 
 const LandingPage = () => {
   return (
-    <div>
+    <div className="container flex column">
       <h1>YOU GOT TO POGO2GO</h1>
-      <img className="generic-image" src="HomePage.jpg" />
-    </div>
+      <img src="HomePage.jpg" />
+    </div >
   )
 }
 
