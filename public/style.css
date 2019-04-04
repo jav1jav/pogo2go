@@ -2,6 +2,7 @@
 
 body {
   font-family: 'Roboto', sans-serif;
+  margin: 0px;
 }
 
 a {
@@ -9,7 +10,7 @@ a {
 }
 
 h1 a {
-  color: black
+  color: black;
 }
 
 .title {
@@ -38,8 +39,55 @@ form div {
   display: flex;
 }
 
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-header {
+  background-color: rgb(229, 235, 200);
+  position: sticky;
+  left: 0%;
+  top: 0%;
+  flex-shrink: 0;
+}
+.page-footer {
+  background-color: rgb(235, 200, 200);
+  flex-shrink: 0;
+}
+
+.page-body {
+  display: flex;
+  flex-grow: 1;
+}
+
 .column {
   flex-direction: column;
+}
+
+.grow-1 {
+  flex-grow: 1;
+}
+.row {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.justify-space-between {
+  justify-content: space-between;
+}
+
+.justify-space-around {
+  justify-content: space-around;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.align-items-center {
+  align-items: center;
 }
 
 .gallery {
@@ -56,18 +104,19 @@ form div {
 button {
   background-color: #2cc6f9;
   color: #fff;
-  font-size: .8rem;
-  padding: .3rem .5rem;
+  font-size: 0.8rem;
+  padding: 0.3rem 0.5rem;
   border-radius: 6px;
   border: none;
 }
 
 img {
-  width: 80%;
+  width: 100%;
   height: auto;
 }
 
-.item, .item-detail {
+.item,
+.item-detail {
   margin: 0 1rem;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   border-radius: 4px;
@@ -90,7 +139,8 @@ img {
   height: auto;
 }
 
-.item .header, .item-detail .header {
+.item .header,
+.item-detail .header {
   background-color: #2cc6f9;
   color: white;
   font-weight: bold;
@@ -111,25 +161,28 @@ img {
 }
 
 .description {
-  padding: 0 .75rem;
+  padding: 0 0.75rem;
 }
 
 table {
-    border-collapse: collapse;
-    min-width: 300px;
-    width: 100%;
+  border-collapse: collapse;
+  min-width: 300px;
+  width: 100%;
 }
 
-th, td {
-    text-align: left;
-    padding: 8px;
+th,
+td {
+  text-align: left;
+  padding: 8px;
 }
 
-tr:nth-child(odd){background-color: #f2f2f2}
+tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
 
 th {
-    background-color: #2cc6f9;
-    color: white;
+  background-color: #2cc6f9;
+  color: white;
 }
 
 .container {

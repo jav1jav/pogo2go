@@ -36,18 +36,18 @@ class SingleProduct extends Component {
     return (
       <React.Fragment>
         <div className="single-product container flex column">
-          <div className="container flex column">
+          {/* <div className="container flex column"> */}
             <div className="item-detail flex column">
-              <div className="flex column">
+              {/* <div className="flex column"> */}
                 <div className="header">
                   <span>{aProduct.name}</span>
                 </div>
                 <img className="item-image" src={aProduct.image} />
                 <span className='description'>{aProduct.description}</span>
-              </div>
+              {/* </div> */}
               <span className="footer">${aProduct.price}</span>
             </div>
-          </div>
+          {/* </div> */}
           <button className='action-button' type="submit" onClick={writeToCart}>Add to Cart</button>
         </div>
       </React.Fragment>

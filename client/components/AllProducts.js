@@ -12,7 +12,7 @@ class AllProducts extends Component {
     return (
       <React.Fragment>
         <h1 className="title">Choose your pogo</h1>
-        <div className="container flex gallery">
+        <div className="page-body container flex gallery">
           {' '}
           {/* container for all products*/}
           {this.props.products.map(item => (
