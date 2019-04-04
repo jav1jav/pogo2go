@@ -32,7 +32,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
         )}
       </nav>
     </div>
-    <hr />
+    <div className="horizontal_rule" />
   </div>
 )
 

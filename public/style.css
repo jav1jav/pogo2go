@@ -9,8 +9,15 @@ a {
   text-decoration: none;
 }
 
+.horizontal_rule {
+  background-color: rgb(42, 112, 140);
+  height: 1em;
+  margin: 0;
+}
+
 h1 a {
-  color: black;
+  margin: 1em;
+  color: white;
 }
 
 .title {
@@ -28,6 +35,7 @@ label {
 nav a {
   display: inline-block;
   margin: 1em;
+  color: white;
 }
 
 form div {
@@ -46,14 +54,15 @@ form div {
 }
 
 .page-header {
-  background-color: rgb(229, 235, 200);
+  background-color: rgb(46, 154, 166);
+  color: white;
   position: sticky;
   left: 0%;
   top: 0%;
   flex-shrink: 0;
 }
 .page-footer {
-  background-color: rgb(235, 200, 200);
+  background-color: rgb(24, 96, 140);
   flex-shrink: 0;
 }
 
@@ -69,6 +78,11 @@ form div {
 .grow-1 {
   flex-grow: 1;
 }
+
+.grow-2 {
+  flex-grow: 2;
+}
+
 .row {
   flex-direction: row;
   flex-wrap: wrap;
@@ -110,9 +124,59 @@ button {
   border: none;
 }
 
+.box-1 {
+  width: 45%;
+  height: 45%;
+  padding: 2.5%;
+  min-width: 300px;
+  max-width: 50vw;
+}
+
+.box-2 {
+  width: 28%;
+  height: 28%;
+  padding: 2.5%;
+  min-width: 300px;
+  max-width: 33wv;
+}
+
 img {
   width: 100%;
   height: auto;
+}
+
+.social-logos {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+  margin-right: 10px;
+  border-radius: 50%;
+  border-color:  white;
+  border-width: 2px;
+  background-color:  rgb(24, 96, 140);
+  background-size: cover;
+  background-position: center;
+  -webkit-transition: box-shadow .3s ease-in-out;
+  transition: box-shadow .3s ease-in-out;
+}
+
+.img-1 {
+  width: 45%;
+  height: 45%;
+  margin: 5%;
+
+  /* min-height: 175px; */
+  /* margin: 2em; */
+}
+
+.img-1 {
+  width: 45%;
+  height: 45%;
+  margin: 5%;
+
+  /* min-height: 175px; */
+  /* margin: 2em; */
 }
 
 .item,
