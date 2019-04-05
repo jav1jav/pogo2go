@@ -16,7 +16,7 @@ export class UserHome extends Component {
           <p>loading...</p>
         ) : (
           <div>
-            <h3>Welcome, {this.props.user.name}</h3>
+            <h1>Account Information</h1>
             <div>
               <img src={this.props.user.imageUrl} />
               <h3>{this.props.user.name}</h3>

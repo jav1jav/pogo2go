@@ -3,7 +3,7 @@ import React from 'react'
 const LandingPage = () => {
   return (
     <React.Fragment>
-      <h1>WELCOME TO POGO2GO</h1>
+      <h1>Welcome to Pogo2Go</h1>
       <div className="page-body container flex column">
         <img className="one-column-box" src="HomePage.jpg" />
         <div className="flex row justify-center">

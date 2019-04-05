@@ -68,27 +68,30 @@ class ShoppingCart extends Component {
 
     return (
       <React.Fragment>
-        <div className="page-body">
-          <table>
+        <h1>Shopping Cart</h1>
+        <div className="page-body flex column align-items-center">
+          <table className="item">
             <tbody>
               <tr>
-                <th>product name</th>
-                <th>price</th>
+                <th />
+                <th>PRODUCT NAME</th>
+                <th>PRICE</th>
               </tr>
               {productList.map(prod => {
                 return (
                   <tr key={prod.id}>
-                    <td>{prod.name}</td>
-                    <td>{prod.price}</td>
                     <td>
                       <button type="submit" onClick={() => removeItem(prod.id)}>
                         remove item
                       </button>
                     </td>
+                    <td>{prod.name}</td>
+                    <td>{prod.price}</td>
                   </tr>
                 )
               })}
               <tr>
+                <td />
                 <td>
                   <b>total</b>
                 </td>
@@ -96,11 +99,15 @@ class ShoppingCart extends Component {
               </tr>
             </tbody>
           </table>
-        </div>
-        <div>
-          <Link className="black" to="/store">Continue Shopping</Link>
+          {/* </div>
+        <div> */}
+          <Link className="black" to="/store">
+            Continue Shopping
+          </Link>
           <br />
-          <Link className="black" to="/checkout">Checkout</Link>
+          <Link className="black" to="/checkout">
+            Checkout
+          </Link>
         </div>
       </React.Fragment>
     )
