@@ -4,7 +4,10 @@ import {Link} from 'react-router-dom'
 const Footer = () => (
   <div id="footer" className="page-footer flex column">
     <div id="info-row" className="flex row justify-space-around">
-      <div id="info-locations" className="container column grow-1 three-column-box">
+      <div
+        id="info-locations"
+        className="container column grow-1 three-column-box"
+      >
         <h2>COME SEE US</h2>
 
         <a className="flex column align-items-center" href="tel:14155247362">
@@ -40,15 +43,21 @@ const Footer = () => (
         <img className="three-column-box" src="pogo_logo.png" />
       </div>
 
-      <div id="info-social" className="container column grow-1 three-column-box">
+      <div
+        id="info-social"
+        className="container column grow-1 three-column-box"
+      >
         <h2>KEEP IN TOUCH</h2>
         <div className="flex row align-items-center">
-          <a
+          {/* <a
             style={{backgroundImage: "url('social-facebook.jpg')"}}
             className="social-logos"
             href="http://www.facebook.com/newwheel"
-          />
+          /> */}
 
+          <a href="http://facebook.com/newwheel">
+            <img className="social-logos" src="social-facebook.jpg" />
+          </a>
           <a href="http://instagram.com/newwheel">
             <img className="social-logos" src="social-instagram.jpg" />
           </a>

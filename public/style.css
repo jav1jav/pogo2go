@@ -12,6 +12,7 @@ body {
 
 a {
   text-decoration: none;
+  color: white;
 }
 
 h1 {
@@ -281,10 +282,12 @@ th {
   width: 30px;
   height: 30px;
   overflow: hidden;
-  margin-right: 10px;
+  margin-right: 5px;
+  margin-left: 5px;
+  border-style: solid;
   border-radius: 50%;
   border-color:  white;
-  border-width: 2px;
+  border-width: 5px;
   background-color:  rgb(24, 96, 140);
   background-size: cover;
   background-position: center;
