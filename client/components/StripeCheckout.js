@@ -6,11 +6,11 @@ class StripeTest extends Component {
 
   render() {
     return(
-      <React.Fragment>
+      <div className="page-body column align-items-center">
         <Elements>
           <InjectedCheckoutForm />
         </Elements>
-      </React.Fragment>
+      </div>
     )
   }
 }

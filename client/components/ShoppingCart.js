@@ -68,7 +68,7 @@ class ShoppingCart extends Component {
 
     return (
       <React.Fragment>
-        <div>
+        <div className="page-body">
           <table>
             <tbody>
               <tr>
@@ -98,9 +98,9 @@ class ShoppingCart extends Component {
           </table>
         </div>
         <div>
-          <Link to="/store">Continue Shopping</Link>
+          <Link className="black" to="/store">Continue Shopping</Link>
           <br />
-          <Link to="/checkout">Checkout</Link>
+          <Link className="black" to="/checkout">Checkout</Link>
         </div>
       </React.Fragment>
     )

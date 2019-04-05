@@ -11,7 +11,7 @@ export class UserHome extends Component {
 
   render() {
     return (
-      <div>
+      <div className="page-body column align-items-center">
         {!this.props.user.orders ? (
           <p>loading...</p>
         ) : (

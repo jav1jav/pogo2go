@@ -37,6 +37,10 @@ button {
   font-weight: bold;
 }
 
+.black {
+  color: black;
+}
+
 .flex {
   display: flex;
 }
@@ -233,7 +237,7 @@ form div {
 
 table {
   border-collapse: collapse;
-  min-width: 300px;
+  min-width: 495px;
   width: 100%;
 }
 
