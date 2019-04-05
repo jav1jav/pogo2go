@@ -45,7 +45,7 @@ class SingleProduct extends Component {
                 <img className="item-image" src={aProduct.image} />
                 <span className='description'>{aProduct.description}</span>
               {/* </div> */}
-              <span className="footer">${aProduct.price}</span>
+              <span className="single-product-footer">${aProduct.price}</span>
             </div>
           {/* </div> */}
           <button className='action-button' type="submit" onClick={writeToCart}>Add to Cart</button>

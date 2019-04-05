@@ -11,7 +11,7 @@ class AllProducts extends Component {
   render() {
     return (
       <React.Fragment>
-        <h1 className="title">Choose your pogo</h1>
+        <h1>Choose your pogo</h1>
         <div className="page-body container flex gallery">
           {' '}
           {/* container for all products*/}
