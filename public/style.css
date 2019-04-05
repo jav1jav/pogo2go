@@ -271,8 +271,9 @@ th {
   width: 28%;
   height: 28%;
   padding: 2.5%;
-  min-width: 300px;
+  min-width: 200px;
   max-width: 33wv;
+  max-height: 200px;
 }
 
 .social-logos {
