@@ -35,7 +35,7 @@ class ShoppingCart extends Component {
 
   render() {
     const {user, isLoggedIn} = this.props
-
+    console.log('ShoppingCart.js | user', user)
     // Provided ComponentDidMount does its job, then productList gets assigned
     // either the products on the order found on the user object on props,
     // or we're pulling the products from localStorage which are stored in
@@ -44,7 +44,7 @@ class ShoppingCart extends Component {
       ? user.orders.find(order => !order.isPurchased)
       : []
     const productList =
-      isLoggedIn && user.orders
+      isLoggedIn && user.orders.length > 0
         ? loggedInUserCart.products
         : this.state.productList
 

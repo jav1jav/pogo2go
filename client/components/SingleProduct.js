@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchAProductFromDB, fetchProductsFromDB} from '../store/productReducer'
-import {addAnItemToOrder} from '../store/orderReducer'
+import {addAnItemToOrder, addAnOrderId} from '../store/orderReducer'
 
 class SingleProduct extends Component {
   componentDidMount() {
@@ -11,6 +11,7 @@ class SingleProduct extends Component {
   render() {
     const {user, isLoggedIn, products} = this.props
     const productId = Number(this.props.match.params.id)
+    console.log('SingleProduct.js | render | productId:', productId)
 
     // Initialize aProduct prevents rendering errors before componentDidMount
     const aProduct = products.length
@@ -22,10 +23,32 @@ class SingleProduct extends Component {
           description: ''
         }
 
-    const writeToCart = () => {
+    const writeToCart = async () => {
+      console.log('SingleProduct.js before isLoggedIn check | orderId', 'n/a', 'user.id', user.id, 'productId', productId)
+      // if you're logged in, then if you don't have any orders
+      // create an new order
+      // else, find the order that is not yet purchased
+      //   if there isn't an order that is not yet purchased, then
+      //   create a new order
       if (isLoggedIn) {
-        const orderId = user.orders.find(order => !order.isPurchased).id
-        this.props.addAnItemToOrder(orderId, productId)
+        let newestOrder
+        if (user.orders.length === 0) {
+          newestOrder = await this.props.addAnOrderId(user.id)
+          this.props.addAnItemToOrder(newestOrder.id, productId)
+        } else {
+          let tempOrder = user.orders.find(order => !order.isPurchased)
+          if (tempOrder === null) {
+            newestOrder = await this.props.addAnOrderId(user.id)
+            this.props.addAnItemToOrder(newestOrder.id, productId)
+          } else {
+            newestOrder = tempOrder
+            this.props.addAnItemToOrder(newestOrder.id, productId)
+          }
+        }
+
+        console.log('singleProduct.js | writeToCart | newestOrder', newestOrder)
+
+
      } else {
         const productList = JSON.parse(window.localStorage.getItem('productList')) || []
         productList.push(aProduct)
@@ -65,6 +88,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getAProduct: productId => dispatch(fetchAProductFromDB(productId)),
   getAllProducts: () => dispatch(fetchProductsFromDB()),
+  addAnOrderId: (userId) => dispatch(addAnOrderId(userId)),
   addAnItemToOrder: (orderId, productId) => dispatch(addAnItemToOrder(orderId, productId))
 })
 
