@@ -24,33 +24,45 @@ class SingleProduct extends Component {
         }
 
     const writeToCart = async () => {
-      console.log('SingleProduct.js before isLoggedIn check | orderId', 'n/a', 'user.id', user.id, 'productId', productId)
+      console.log(
+        'SingleProduct.js before isLoggedIn check | orderId',
+        'n/a',
+        'user.id',
+        user.id,
+        'productId',
+        productId
+      )
       // if you're logged in, then if you don't have any orders
       // create an new order
       // else, find the order that is not yet purchased
       //   if there isn't an order that is not yet purchased, then
       //   create a new order
       if (isLoggedIn) {
-        let newestOrder
-        if (user.orders.length === 0) {
-          newestOrder = await this.props.addAnOrderId(user.id)
-          this.props.addAnItemToOrder(newestOrder.id, productId)
-        } else {
-          let tempOrder = user.orders.find(order => !order.isPurchased)
-          if (tempOrder === null) {
-            newestOrder = await this.props.addAnOrderId(user.id)
-            this.props.addAnItemToOrder(newestOrder.id, productId)
-          } else {
-            newestOrder = tempOrder
-            this.props.addAnItemToOrder(newestOrder.id, productId)
-          }
-        }
+        const unPurchasedOrder = user.orders.find(order => !order.isPurchased)
+        const newestOrder =
+          user.orders.length === 0 || unPurchasedOrder === undefined
+            ? await this.props.addAnOrderId(user.id)
+            : unPurchasedOrder
+        this.props.addAnItemToOrder(newestOrder.id, productId)
+        // let newestOrder
+        // if (user.orders.length === 0) {
+        //   newestOrder = await this.props.addAnOrderId(user.id)
+        //   this.props.addAnItemToOrder(newestOrder.id, productId)
+        // } else {
+        //   let tempOrder = user.orders.find(order => !order.isPurchased)
+        //   if (tempOrder === null) {
+        //     newestOrder = await this.props.addAnOrderId(user.id)
+        //     this.props.addAnItemToOrder(newestOrder.id, productId)
+        //   } else {
+        //     newestOrder = tempOrder
+        //     this.props.addAnItemToOrder(newestOrder.id, productId)
+        //   }
+        // }
 
         console.log('singleProduct.js | writeToCart | newestOrder', newestOrder)
-
-
-     } else {
-        const productList = JSON.parse(window.localStorage.getItem('productList')) || []
+      } else {
+        const productList =
+          JSON.parse(window.localStorage.getItem('productList')) || []
         productList.push(aProduct)
         window.localStorage.setItem('productList', JSON.stringify(productList))
       }
@@ -60,18 +72,20 @@ class SingleProduct extends Component {
       <React.Fragment>
         <div className="single-product container flex column">
           {/* <div className="container flex column"> */}
-            <div className="item-detail flex column">
-              {/* <div className="flex column"> */}
-                <div className="header">
-                  <span>{aProduct.name}</span>
-                </div>
-                <img className="item-image" src={aProduct.image} />
-                <span className='description'>{aProduct.description}</span>
-              {/* </div> */}
-              <span className="single-product-footer">${aProduct.price}</span>
+          <div className="item-detail flex column">
+            {/* <div className="flex column"> */}
+            <div className="header">
+              <span>{aProduct.name}</span>
             </div>
+            <img className="item-image" src={aProduct.image} />
+            <span className="description">{aProduct.description}</span>
+            {/* </div> */}
+            <span className="single-product-footer">${aProduct.price}</span>
+          </div>
           {/* </div> */}
-          <button className='action-button' type="submit" onClick={writeToCart}>Add to Cart</button>
+          <button className="action-button" type="submit" onClick={writeToCart}>
+            Add to Cart
+          </button>
         </div>
       </React.Fragment>
     )
@@ -88,8 +102,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getAProduct: productId => dispatch(fetchAProductFromDB(productId)),
   getAllProducts: () => dispatch(fetchProductsFromDB()),
-  addAnOrderId: (userId) => dispatch(addAnOrderId(userId)),
-  addAnItemToOrder: (orderId, productId) => dispatch(addAnItemToOrder(orderId, productId))
+  addAnOrderId: userId => dispatch(addAnOrderId(userId)),
+  addAnItemToOrder: (orderId, productId) =>
+    dispatch(addAnItemToOrder(orderId, productId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)
