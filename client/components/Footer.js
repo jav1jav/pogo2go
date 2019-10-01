@@ -20,7 +20,7 @@ const Footer = () => (
           href="https://goo.gl/maps/kguHI"
         >
           <b>San Francisco</b>
-          <span>420 Cortland Avenue</span>
+          <span>123 Market Avenue</span>
           <span>Open Daily 10am - 6pm</span>
         </a>
         <br />
@@ -30,7 +30,7 @@ const Footer = () => (
           href="https://goo.gl/maps/xihGtmYTW2q"
         >
           <b>Marin County</b>
-          <span>14 E. Sir Francis Drake Blvd.</span>
+          <span>123 Main Street</span>
           <span>Open Tue. - Sun. 10am - 6pm</span>
         </a>
         <br />
