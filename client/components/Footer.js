@@ -10,8 +10,8 @@ const Footer = () => (
       >
         <h2>COME SEE US</h2>
 
-        <a className="flex column align-items-center" href="tel:14155247362">
-          tel: 415.524.7362
+        <a className="flex column align-items-center" href="tel:14155551212">
+          tel: 415.555.1212
         </a>
         <br />
 
@@ -52,22 +52,22 @@ const Footer = () => (
           {/* <a
             style={{backgroundImage: "url('social-facebook.jpg')"}}
             className="social-logos"
-            href="http://www.facebook.com/newwheel"
+            href="http://www.facebook.com"
           /> */}
 
-          <a href="http://facebook.com/newwheel">
+          <a href="http://facebook.com">
             <img className="social-logos" src="social-facebook.jpg" />
           </a>
-          <a href="http://instagram.com/newwheel">
+          <a href="http://instagram.com">
             <img className="social-logos" src="social-instagram.jpg" />
           </a>
-          <a href="http://www.twitter.com/newwheel">
+          <a href="http://www.twitter.com">
             <img className="social-logos" src="social-twitter.jpg" />
           </a>
-          <a href="http://www.youtube.com/user/thenewwheel">
+          <a href="http://www.youtube.com">
             <img className="social-logos" src="social-youtube.jpg" />
           </a>
-          <a href="http://www.yelp.com/biz/the-new-wheel-electric-bikes-san-francisco-2">
+          <a href="http://www.yelp.com">
             <img className="social-logos" src="social-yelp.jpg" />
           </a>
         </div>
