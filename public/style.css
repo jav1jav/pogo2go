@@ -145,8 +145,9 @@ nav a {
 }
 
 .two-column-box {
+  object-fit: contain;
   width: 45%;
-  /* height: 45%; */
+  height: 45%;
   padding: 2.5%;
   min-width: 300px;
   max-width: 50vw;
@@ -273,8 +274,9 @@ th {
 }
 
 .three-column-box {
+  object-fit: contain;
   width: 28%;
-  /* height: 28%; */
+  height: 28%;
   padding: 2.5%;
   min-width: 200px;
   max-width: 33wv;
