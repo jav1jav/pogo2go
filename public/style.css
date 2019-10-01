@@ -146,7 +146,7 @@ nav a {
 
 .two-column-box {
   width: 45%;
-  height: 45%;
+  /* height: 45%; */
   padding: 2.5%;
   min-width: 300px;
   max-width: 50vw;
