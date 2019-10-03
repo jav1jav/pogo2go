@@ -17,7 +17,7 @@ const Footer = () => (
 
         <a
           className="flex column align-items-center"
-          href="https://goo.gl/maps/kguHI"
+          href="https://goo.gl/maps"
         >
           <b>San Francisco</b>
           <span>123 Market Avenue</span>
@@ -27,7 +27,7 @@ const Footer = () => (
 
         <a
           className="flex column align-items-center"
-          href="https://goo.gl/maps/xihGtmYTW2q"
+          href="https://goo.gl/maps"
         >
           <b>Marin County</b>
           <span>123 Main Street</span>
